@@ -1,0 +1,26 @@
+import { useEffect, useContext } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { IUser } from "../../common/interface"
+import { AuthContext } from "../../context/AuthContext"
+import { SET_PROFILE_SAGA } from "../../store/profile-reducer"
+import { getProfile } from "../../store/selectors"
+
+export const Header = () => {
+    const dispatch = useDispatch();
+    const auth = useContext(AuthContext);
+    const profileId : number = auth.userId;
+    useEffect(() => {
+        dispatch({type : SET_PROFILE_SAGA, profileId : profileId});
+        return () => {
+            dispatch({type : SET_PROFILE_SAGA, profileId : 0});
+        }
+    }, [profileId])
+    
+    const profile : IUser= useSelector(getProfile)
+    return (
+        <div className="header">
+            <div className="title-panel__chat-title">Chatter</div>
+            {profile.name + ' ' + profile.email}
+        </div>
+    )
+}

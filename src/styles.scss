@@ -1,0 +1,180 @@
+@import url(https://fonts.googleapis.com/css?family=Architects+Daughter:regular);
+
+$BACKGROUND_DARK: #43464b;
+$BACKGROUND_LIGHT: #727883;
+$ICONCOLOR: #70cc16;
+$CONTAINER_WIDTH: 1600px;
+
+@import "./styles/mixins.scss";
+@import "./styles/chat.scss";
+@import "./styles/navs.scss";
+@import "./styles/auth.scss";
+
+.header {
+    @include flexible_between();
+    height: 40px;
+    width: $CONTAINER_WIDTH;
+    max-width: $CONTAINER_WIDTH;
+    max-height: 40px;
+    margin: 0 auto;
+    margin-top: 3px;
+
+    background-color: white;
+    font-family: "Architects Daughter";
+    border: 1px solid black;
+    padding: 0 10px;
+
+    .title-panel__chat-title {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 24px;
+        color: black;
+    }
+}
+
+.container {
+    height: 800px;
+    width: $CONTAINER_WIDTH;
+    border-radius: 5px;
+    max-width: $CONTAINER_WIDTH;
+    max-height: 800px;
+    margin: auto;
+    position: relative;
+    background-color: #ffffff;
+    display: flex;
+}
+
+//=======СТРАНИЦА ПРОФИЛЯ ДРУГА=========
+.friend-profile {
+    width: 19%;
+    background: lightgray;
+    mix-blend-mode: normal;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    z-index: 4;
+    overflow: hidden;
+
+    &.expand {
+        width: 200px;
+        transition: width 0.7s;
+        z-index: 4;
+    }
+
+    &.non-expand {
+        width: 0px;
+        transition: width 0.7s;
+        z-index: 4;
+    }
+}
+
+.friend-profile__img {
+    object-fit: cover;
+}
+
+.ant-card-cover img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.friend-profile__content {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+
+    .friend-profile__content-top {
+        .friend-profile__friend-item {
+            font-size: 16px;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .friend-profile__friend-status {
+            font-size: 14px;
+            color: grey;
+        }
+
+        .friend-profile__social-panel {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .friend-profile__message-button {
+            margin-top: 10px;
+            width: 100%;
+            @include flexible_between();
+        }
+
+        .friend-profile__message-button_send {
+            width: 75%;
+        }
+
+        .friend-profile__message-button_addittional {
+            width: 20%;
+        }
+
+        .friend-profile__info {
+            margin-top: 10px;
+        }
+    }
+
+    .friend-profile__content-bot {
+    }
+}
+
+//=======MESSAGE=========
+.ant-message-notice-content {
+    background-color: lightgray !important;
+    border-radius: 10px !important;
+}
+
+//=======СТРАНИЦА ПРОФИЛЯ=========
+
+.profile {
+    background-color: lightgray;
+    width: 100%;
+
+    .profile-content {
+        display: flex;
+
+        .profile-content__photo-panel {
+            margin-left: 40px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 15%;
+
+            .profile-content__img {
+                object-fit: cover;
+                max-height: 300px;
+            }
+
+            .profile-content__btn {
+                height: 40px;
+            }
+        }
+
+        .profile-info {
+            margin-top: 20px;
+            width: 50%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid $BACKGROUND_DARK;
+            border-radius: 3px;
+            margin-left: 20px;
+
+            .profile-info__panel {
+                margin: 10px;
+
+                .profile-info__name {
+                    color: rgba(0, 0, 0, 0.5);
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

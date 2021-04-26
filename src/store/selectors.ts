@@ -1,0 +1,96 @@
+import { IChatTab, IMessage, IUser } from "../common/interface";
+
+export const getChannels = (state: any) => {
+  return state.channels.channels;
+};
+
+export const getFriends = (state: any) => {
+  return state.friends.friends;
+};
+
+export const getFriendsLoading = (state: any) => {
+  return state.friends.loading;
+};
+
+export const getActiveFriend = (state: any) => {
+  return state.friends.friends.find((friend: IUser) => friend.active);
+};
+
+export const getConnectionId = (state: any) => {
+  return state.chat.connectionId;
+};
+
+export const getProfile = (state: any) => {
+  return state.profile;
+};
+
+export const getWebSocketConnection = (state: any) => {
+  return state.chat.socket;
+};
+
+export const getChatTabs = (state: any) => {
+  return state.chat.tabs;
+};
+
+export const getActiveTabsKey = (state: any) => {
+  if (state.chat.tabs.length > 0) {
+    let activeTab: IChatTab = state.chat.tabs.find(
+      (tab: IChatTab) => tab.active === true
+    );
+    if (activeTab !== undefined) {
+      return activeTab.key;
+    } else {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
+};
+
+export const getDriwerFriend = (state: any) => {
+  let idDriwerFriend: number = state.friends.drawerFriend;
+  if (idDriwerFriend === -1) {
+    return;
+  }
+
+  return state.friends.friends.find(
+    (friend: IUser) => friend.id === idDriwerFriend
+  );
+};
+
+export const getMessageFromTab = (id: any) => (state: any) => {
+  const messages: Array<IMessage> = state.chat.messages.filter(
+    (mes: IMessage) => mes.to_user === id || mes.from === id
+  );
+  /*let currentTab: IChatTab = state.chat.tabs.find((tab: IChatTab) => {
+    return tab.key === id;
+  });
+*/
+  return messages;
+};
+
+export const getMessages = (id: number) => (state: any) => {
+  const messages: Array<IMessage> = state.chat.messages.filter(
+    (mes: IMessage) => mes.to_user === id || mes.from === id
+  );
+
+  return messages;
+};
+
+export const getUndeliveredMessage = (state: any) => {
+  let countUndelivered: Array<{
+    id: number;
+    count: number;
+  }> = [];
+
+  if (state.friends.friends.length > 0) {
+    countUndelivered = state.friends.friends.map((friend: IUser) => {
+      let friendMessages: Array<IMessage> = state.chat.messages.filter(
+        (mes: IMessage) => mes.is_send === 0 && mes.from === friend.id
+      );
+
+      return { id: friend.id, count: friendMessages.length };
+    });
+  }
+  return countUndelivered;
+};

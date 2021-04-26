@@ -1,0 +1,28 @@
+//=======ГЛАВНЫЙ НАВИГАТОР=========
+.nav-left {
+    background: $BACKGROUND_DARK;
+    mix-blend-mode: normal;
+    width: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .button-panel__icons {
+        font-size: 40px;
+        margin-bottom: 20px;
+        color: $ICONCOLOR;
+    }
+
+    .button-panel_main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .button-panel_additional {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+    }
+}

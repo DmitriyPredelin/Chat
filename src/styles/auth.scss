@@ -1,0 +1,39 @@
+//=======СТРАНИЦА АВТОРИЗАЦИИ=========
+.auth {
+    min-width: 400px;
+    max-width: 500px;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-top: 50px;
+    background-color: gray;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    .auth_element-panel {
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+
+        .auth_label {
+            font-style: italic;
+            color: whitesmoke;
+            margin-bottom: 5px;
+        }
+
+        .auth_input {
+            margin-bottom: 10px;
+        }
+
+        .auth_btn {
+            margin-top: 7px;
+        }
+    }
+
+    .auth_name {
+        font-size: 24px;
+        color: whitesmoke;
+    }
+}
