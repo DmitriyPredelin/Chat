@@ -4,11 +4,13 @@ $BACKGROUND_DARK: #43464b;
 $BACKGROUND_LIGHT: #727883;
 $ICONCOLOR: #70cc16;
 $CONTAINER_WIDTH: 1600px;
+$CONTAINER_HEIGHT: 900px;
 
 @import "./styles/mixins.scss";
 @import "./styles/chat.scss";
 @import "./styles/navs.scss";
 @import "./styles/auth.scss";
+@import "./styles/calendar.scss";
 
 .header {
     @include flexible_between();
@@ -34,11 +36,11 @@ $CONTAINER_WIDTH: 1600px;
 }
 
 .container {
-    height: 800px;
+    height: $CONTAINER_HEIGHT;
     width: $CONTAINER_WIDTH;
     border-radius: 5px;
     max-width: $CONTAINER_WIDTH;
-    max-height: 800px;
+    max-height: $CONTAINER_HEIGHT;
     margin: auto;
     position: relative;
     background-color: #ffffff;

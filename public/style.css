@@ -1,5 +1,9 @@
 body {
     padding: 0;
     margin: 0;
-    background-color: rgb(124, 204, 241)!important;
+    background: linear-gradient(#b3e5fc, #26a69a );
+    overflow: hidden;
+    box-sizing: border-box;
 }
+
+/*background-color: rgb(124, 204, 241)!important;*/

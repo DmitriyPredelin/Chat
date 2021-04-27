@@ -1,0 +1,32 @@
+.calendar-general {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+   
+    width: 95%;
+    align-content: flex-start;
+    height: 100%;
+}
+
+.calendar-panel {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 100%;
+
+    .day-panel {
+        background-color: whitesmoke;
+        width: 12%;
+        height: 12%;
+        margin: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #c8e6c9;
+        }
+    }
+}
+
+

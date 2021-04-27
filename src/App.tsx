@@ -9,6 +9,7 @@ import { useAuth } from './hooks/useAuth';
 import AuthPage from "./pages/authPage"
 import { ProfilePage } from "./pages/profilerPage"
 import { Header } from './components/general/header';
+import { CalendarPage } from './pages/calendarPage'
 
 
 
@@ -65,9 +66,12 @@ function App() {
           <Route path="/profile">
             <ProfilePage />
           </Route>
+          <Route path="/calendar">
+            <CalendarPage />
+          </Route>
 
           <Route exact path="/">
-            {isAuthentificated ? <Redirect to="/chat" /> : null}
+            {isAuthentificated ? <Redirect to="/chat" /> : <Redirect to="/auth" />}
           </Route>
         </Switch>
       </div >

@@ -37,6 +37,7 @@ export const getActiveTabsKey = (state: any) => {
     let activeTab: IChatTab = state.chat.tabs.find(
       (tab: IChatTab) => tab.active === true
     );
+
     if (activeTab !== undefined) {
       return activeTab.key;
     } else {
@@ -78,13 +79,21 @@ export const getMessages = (id: number) => (state: any) => {
 };
 
 export const getUndeliveredMessage = (state: any) => {
+  let friends: Array<IUser> = state.friends.friends;
+  let activeTabKey: string | undefined = getActiveTabsKey(state);
   let countUndelivered: Array<{
     id: number;
     count: number;
   }> = [];
 
-  if (state.friends.friends.length > 0) {
-    countUndelivered = state.friends.friends.map((friend: IUser) => {
+  if (friends.length > 0) {
+    countUndelivered = friends.map((friend: IUser) => {
+      if (activeTabKey) {
+        if (parseInt(activeTabKey) === friend.id) {
+          return { id: friend.id, count: 0 };
+        }
+      }
+
       let friendMessages: Array<IMessage> = state.chat.messages.filter(
         (mes: IMessage) => mes.is_send === 0 && mes.from === friend.id
       );

@@ -60,7 +60,7 @@ export const DrawerPanel = (props: any) => {
                         <Button ghost type="primary" shape="circle" icon={<FacebookOutlined />}></Button>
                     </div>
                     <div className="friend-profile__message-button">
-                        <Button className="friend-profile__message-button_send"  type="primary" onClick={sendMessage}>Cообщение</Button>
+                        <Button className="friend-profile__message-button_send" type="primary" onClick={sendMessage}>Cообщение</Button>
                         <Dropdown overlay={menu} placement="bottomRight">
                             <Button type="primary" >
                                 <CaretDownOutlined />

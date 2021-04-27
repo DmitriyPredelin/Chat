@@ -1,19 +1,19 @@
+import { CaretRightOutlined } from "@ant-design/icons";
+import { Avatar, Badge, List, Spin } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { getChatTabs, getFriendsLoading, getUndeliveredMessage } from "../../store/selectors";
-import { Avatar, Spin, List, Badge } from 'antd';
-import { setActiveFriendAC, setDriwerFriendAC } from "../../store/friend-reducer";
+import { IUser } from "../../common/interface";
 import { addTabAC, setActiveChatAC, setActiveTabAC } from "../../store/chat-reducer";
-import { IChatTab, IUser } from "../../common/interface";
-import { UserOutlined } from "@ant-design/icons";
+import { setActiveFriendAC, setDriwerFriendAC } from "../../store/friend-reducer";
+import { getFriendsLoading, getUndeliveredMessage } from "../../store/selectors";
 
 export const FriendListPanel = (props: any) => {
     const friends = props.panelList;
     const setProfileVisible = props.setProfileVisible;
     const loading = useSelector(getFriendsLoading);
-    const tabs: Array<IChatTab> = useSelector(getChatTabs);
 
     const dispatch = useDispatch();
     const setActiveFriend = (friendId: number, friendName: string) => {
+        console.log('setActiveFriend');
 
         //установим активного друга
         dispatch(setActiveFriendAC(friendId));
@@ -22,12 +22,8 @@ export const FriendListPanel = (props: any) => {
         dispatch(setActiveChatAC);
 
         //добавим вкладку в чат
-        if (tabs.findIndex((tab: IChatTab) => {
-            return tab.key === friendId.toString()
-        }) === -1) {
-            dispatch(addTabAC(friendId.toString(), friendName));
-            dispatch(setActiveTabAC(friendId.toString()))
-        }
+        dispatch(addTabAC(friendId.toString(), friendName));
+        dispatch(setActiveTabAC(friendId.toString()))
     }
 
     const arRecordIdCountUndelivered: Array<{
@@ -57,19 +53,25 @@ export const FriendListPanel = (props: any) => {
                         return record
                     }
                 })
+                if (!record) {
+                    record = {
+                        id: friend.id,
+                        count: 0
+                    }
+                }
 
                 return (
                     <List.Item className="friend" key={friend.id} onClick={() => setActiveFriend(friend.id, friend.name)}>
                         <div className="friend__online-status"></div>
                         <List.Item.Meta
                             avatar={
-                                <Badge count={record?.count} size="small" showZero={false}>
+                                <Badge count={record.count} size="small" showZero={false}>
                                     <Avatar src={friend.src} className="friend__avatar" size={48} />
                                 </Badge>
                             }
                             title={friend.name}
                         />
-                        <UserOutlined onClick={() => showDriwer(friend.id)} />
+                        <CaretRightOutlined style={{marginRight : '0px'}} onClick={() => showDriwer(friend.id)} />
                     </List.Item>
                 )
             })}

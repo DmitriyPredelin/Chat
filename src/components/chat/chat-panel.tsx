@@ -1,3 +1,4 @@
+import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { Avatar, List } from 'antd';
 import { useContext, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -5,26 +6,29 @@ import { IMessage } from '../../common/interface';
 import { AuthContext } from '../../context/AuthContext';
 import { getMessages } from '../../store/selectors';
 
+
 export const ChatPanel = (props: any) => {
     const wsSend = props.wsSend;
-    const tabKey : number = props.tabKey;
+    const tabKey: number = props.tabKey;
     const textValueRef = useRef<HTMLTextAreaElement>(null)
     const auth = useContext(AuthContext);
 
-    const data : Array<IMessage> = useSelector(getMessages(tabKey));
+    const classNames = require("classnames");
+
+    const data: Array<IMessage> = useSelector(getMessages(tabKey));
     const dispatch = useDispatch();
     //dispatch(setMessageIsSend(data));
 
 
     const send = () => {
-        if (textValueRef && textValueRef.current) {
+        if (textValueRef && textValueRef.current && textValueRef.current.value) {
             let sendText: string = textValueRef.current.value;
 
             let newMessage: IMessage = {
                 id: 0,
                 text: sendText,
                 from: auth.userId,
-                fromName : '',
+                fromName: '',
                 to_user: tabKey,
                 to_channel: 0,
                 is_send: 0,
@@ -33,34 +37,53 @@ export const ChatPanel = (props: any) => {
                 author_src: ""
             }
             console.log(newMessage);
-            
+
             wsSend(newMessage);
-            textValueRef.current.value ='';
+            textValueRef.current.value = '';
         }
     }
 
+    const keyPressHandler = (e: any) => {
+        console.log(e.key);
+
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            send();
+            return false;
+        }
+    }
 
     return (
-        <div className="chat-panel">
-            <List
-                itemLayout="horizontal"
-                dataSource={data}
-                style={{height : "100%"}}
-                renderItem={item => (
-                    <List.Item>
-                        <List.Item.Meta
-                            avatar={<Avatar size="large" src={item.author_src}/>}
-                            title={<a href="https://ant.design">{item.fromName}</a>}
-                            description={item.text}
-                        />
-                    </List.Item>
-                )}
-            />
-            <textarea ref={textValueRef} />
-            <br />
-            <button onClick={send}>Отправить</button>
-            
-        </div>
+        <>
+            <div className="chat-panel">
+                <div className="chat-panel__field">
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={data}
+                        renderItem={message => {
+                            let messageClass: string = classNames(
+                                { "main": message.from === auth.userId },
+                                { "other": message.from !== auth.userId }
+                            );
+                            return <List.Item className={messageClass} >
+                                <List.Item.Meta
+                                    className="chat-message"
+                                    avatar={<Avatar size="large" src={message.author_src} />}
+                                    title={<a href="https://ant.design">{message.fromName}<span></span></a>}
+                                    description={message.text}
+                                />
+                            </List.Item>
+                        }}
+                    />
+                </div>
+            </div>
+            <div className="chat-panel__btn-panel">
+                <PaperClipOutlined className="chat-panel__paper-clip btn-panel__icon" />
+                <textarea rows={1} className="chat-panel__input-field " ref={textValueRef} placeholder="Введите ваше сообщение" onKeyPress={keyPressHandler} />
+                <button className="material-icons-outlined btn-panel__icon_smile btn-panel__icon">sentiment_satisfied</button>
+                <SendOutlined className="chat-panel__send-btn btn-panel__icon" onClick={send} />
+            </div>
+        </>
     )
 
 }

@@ -9,14 +9,15 @@ import { AuthContext } from '../../context/AuthContext';
 
 export const ChatTabs = (props: any) => {
 
+    const auth = useContext(AuthContext);
+
     //сокет соединение
     const dispatch = useDispatch();
     const socket: WebSocket = useSelector(getWebSocketConnection);
+
     if (!socket) {
         dispatch({ type: SET_WEBSOCKET_CONNECT });
     }
-
-    const auth = useContext(AuthContext);
 
     //ключ активного таба
     const activeTabKey = useSelector(getActiveTabsKey);
@@ -24,12 +25,12 @@ export const ChatTabs = (props: any) => {
     //установка сообщений в стейт
     const setMessage = (e: any) => {
         const incomMessage: IMessage = JSON.parse(e.data);
-        let isSend : number = 0;
-        console.log(incomMessage);
-        if (activeTabKey && parseInt(activeTabKey) === incomMessage.from)  {
+        let isSend: number = 0;
+
+        if (activeTabKey && parseInt(activeTabKey) === incomMessage.from) {
             isSend = 1;
         }
-        
+
 
         const newMessage: IMessage = {
             id: 1,
@@ -61,6 +62,8 @@ export const ChatTabs = (props: any) => {
 
     //подписки сокета
     useEffect(() => {
+        console.log('useEffect auth');
+
         if (socket !== null) {
             socket.addEventListener("open", setConnection)
             socket.addEventListener("message", setMessage);
@@ -70,7 +73,11 @@ export const ChatTabs = (props: any) => {
             socket.removeEventListener("message", setMessage, false);
             socket.removeEventListener("open", setConnection, false);
         }
-    }, [])
+    }, [auth])
+
+    useEffect(() => {
+        console.log('useEffect activeTabKey');
+    }, [activeTabKey])
 
     //процедура отправки
     const wsSend = function (data: {}) {
@@ -112,12 +119,10 @@ export const ChatTabs = (props: any) => {
             tabBarGutter={0}
             animated={{ inkBar: false, tabPane: false }}
             style={{ height: "100%" }}
-
-        /*tabBarExtraContent={<MessageOutlined />}*/
         >
             {tabs.map((tab: IChatTab) => (
-                <TabPane style={{ height: "100%" }} tab={tab.name} key={tab.key}>
-                    <ChatPanel style={{ height: "100%" }} wsSend={wsSend} tabKey={parseInt(tab.key)} />
+                <TabPane  tab={tab.name} key={tab.key}>
+                    <ChatPanel  wsSend={wsSend} tabKey={parseInt(tab.key)} />
                 </TabPane>
             ))}
         </Tabs>

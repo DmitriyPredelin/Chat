@@ -38,7 +38,15 @@ const chatReducer = (state = defaultStore, action: any) => {
         active: true,
       };
 
-      copyState.tabs.push(newTabs);
+      let idx = copyState.tabs.findIndex((tab: IChatTab) => {
+        return tab.key === action.key.toString();
+      });
+      
+      
+      if (idx === -1) {
+        copyState.tabs.push(newTabs);
+      }
+ 
       return copyState;
 
     case REMOVE_TAB:
@@ -55,10 +63,19 @@ const chatReducer = (state = defaultStore, action: any) => {
       copyState.tabs.forEach((tab) => {
         tab.active = false;
       });
+      console.log(SET_ACTIVE_TAB);
+
       let tab = copyState.tabs.find((tab: IChatTab) => tab.key === action.key);
 
       if (tab !== undefined) {
         tab.active = true;
+        copyState.messages.forEach((message: IMessage) => {
+          if (tab !== undefined) {
+            if (message.from === parseInt(tab.key)) {
+              message.is_send = 1;
+            }
+          }
+        });
       }
 
       return copyState;

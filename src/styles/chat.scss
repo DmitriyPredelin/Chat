@@ -1,8 +1,7 @@
 .nav-right {
     background: $BACKGROUND_LIGHT;
     mix-blend-mode: normal;
-
-    width: 18%;
+    width: 17%;
     padding-top: 20px;
 
     .panel {
@@ -96,7 +95,6 @@
         justify-content: space-between;
         align-items: center;
         cursor: pointer;
-        width: 95%;
         padding: 0px 5px;
         height: 40px;
         border-style: none;
@@ -124,7 +122,7 @@
 }
 
 .center-area {
-    width: 84%;
+    width: 78%;
     border-style: none;
     background: white;
     z-index: 1;
@@ -133,11 +131,93 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: 100%;
-        padding: 10px;
+        height: 93%;
+ 
+        .chat-panel__field {
+            max-height: 100%;
+            .chat-message {
+                margin: 0 25px;
+            }
+        }
+
+        
+
+    }
+
+    .chat-panel__btn-panel {
+        z-index: 5;
+        height: 7%;
+        width: 100%;
+        @include flexible_between();
+        border: 1px solid black;
+
+        .btn-panel__icon {
+            color : $BACKGROUND_LIGHT;
+            font-size: 25px;
+            margin: 0 15px;
+            cursor: pointer;
+            &:hover {
+                color : black;
+            }
+        }
+
+        .chat-panel__input-field {
+            width: 100%;
+            border-style: none;
+            max-height: 50px;
+            resize: none;
+
+            &:focus {
+                border-style: none;
+                outline: none ;
+                box-shadow: none;
+            }
+            &:active {
+                border-style: none;
+                box-shadow: none;
+            }
+        }
+        
+        .btn-panel__icon_smile {
+            border-style: none;
+            background-color: #fff;
+            margin-right: -10px;
+        }
     }
 
     .ant-tabs-content {
         height: 100%;
     }
+    .ant-list-empty-text {
+        display: none;
+    }
+
+    .ant-list-split {
+        max-height: 100%;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+        &::-webkit-scrollbar-track {
+            background: #ede7f6;
+            border-radius: 20px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: $BACKGROUND_LIGHT;
+            border-radius: 20px;
+        }
+    }
+
+    .ant-list-item.main  {
+        background-color: #e3f2fd;
+    }
+
+    .ant-list-item.other  {
+        background-color: #ffebee;
+    }
+
+    //#ffebee
+    //background-color: #e3f2fd;
+    //background-color: #ffebee;
+
 }
