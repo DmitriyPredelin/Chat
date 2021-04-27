@@ -7,13 +7,10 @@ export const CalendarPage = () => {
         massiv[i] = i
     }
 
-
-
     return (
         <div className="calendar-general">
             <div>Апрель 2021</div>
             <div className="calendar-panel">
-
                 {massiv.map(() => {
                     return <CalendarDay />
                 })}
@@ -21,11 +18,3 @@ export const CalendarPage = () => {
         </div>
     )
 }
-
-
-/*<div className="calendar-panel">
-
-            {massiv.map(() => {
-                return <CalendarDay />
-            })}
-        </div>*/
