@@ -1,14 +1,14 @@
-import { FriendListPanel } from "../components/chat/friend-list-panel";
-import { ChannelPanel } from "../components/chat/channel-panel";
-import { WrapperPanel } from '../components/wrapper/wrapper-panel';
-import { getChannels, getFriends } from '../store/selectors';
+import { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setChannelsSagaAC } from '../store/channel-reducer';
-import { useEffect, useState, useContext } from 'react';
-import { SET_FRIENDS_SAGA } from '../store/friend-reducer';
+import { getChannels, getFriends } from "../store/chat-reducers/chat-selectors";
+import { ChannelPanel } from "../components/chat/channel-panel";
 import { ChatTabs } from '../components/chat/chat-tabs';
-import { DrawerPanel } from '../components/chat/drawer'
+import { DrawerPanel } from '../components/chat/drawer';
+import { FriendListPanel } from "../components/chat/friend-list-panel";
+import { WrapperPanel } from '../components/wrapper/wrapper-panel';
 import { AuthContext } from "../context/AuthContext";
+import { setChannelsSagaAC } from '../store/chat-reducers/channel-reducer';
+import { SET_FRIENDS_SAGA } from '../store/chat-reducers/friend-reducer';
 
 
 export const ChatPage = () => {

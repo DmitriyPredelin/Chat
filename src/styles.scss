@@ -2,15 +2,17 @@
 
 $BACKGROUND_DARK: #43464b;
 $BACKGROUND_LIGHT: #727883;
-$ICONCOLOR: #70cc16;
+$ICONCOLOR: #ffd700;
 $CONTAINER_WIDTH: 1600px;
 $CONTAINER_HEIGHT: 900px;
+
 
 @import "./styles/mixins.scss";
 @import "./styles/chat.scss";
 @import "./styles/navs.scss";
 @import "./styles/auth.scss";
 @import "./styles/calendar.scss";
+@import "./styles/sea-battle.scss";
 
 .header {
     @include flexible_between();

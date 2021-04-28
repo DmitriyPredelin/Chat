@@ -1,13 +1,13 @@
 import { Tabs } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getActiveTabsKey, getChatTabs, getWebSocketConnection } from '../../store/selectors';
-import { addMessageAC, removeTabAC, setActiveTabAC, SET_WEBSOCKET_CONNECT } from '../../store/chat-reducer';
+import { getActiveTabsKey, getChatTabs, getWebSocketConnection } from "../../store/chat-reducers/chat-selectors";
+import { addMessageAC, removeTabAC, setActiveTabAC, SET_WEBSOCKET_CONNECT } from '../../store/chat-reducers/chat-reducer';
 import { ChatPanel } from "./chat-panel"
 import { IChatTab, IConnect, IMessage } from '../../common/interface';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-export const ChatTabs = (props: any) => {
+export const ChatTabs = () => {
 
     const auth = useContext(AuthContext);
 
@@ -30,7 +30,6 @@ export const ChatTabs = (props: any) => {
         if (activeTabKey && parseInt(activeTabKey) === incomMessage.from) {
             isSend = 1;
         }
-
 
         const newMessage: IMessage = {
             id: 1,
@@ -122,7 +121,7 @@ export const ChatTabs = (props: any) => {
         >
             {tabs.map((tab: IChatTab) => (
                 <TabPane  tab={tab.name} key={tab.key}>
-                    <ChatPanel  wsSend={wsSend} tabKey={parseInt(tab.key)} />
+                    <ChatPanel wsSend={wsSend} tabKey={parseInt(tab.key)}/>
                 </TabPane>
             ))}
         </Tabs>

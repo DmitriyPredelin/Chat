@@ -15,13 +15,13 @@ export interface IMessage {
   id: number;
   text: string;
   from: number;
-  fromName : string;
+  fromName: string;
   to_user: number;
   to_channel: number;
   is_send: number;
   type: string;
   timeStamp: number;
-  author_src : string;
+  author_src: string;
 }
 
 export interface IConnect {
@@ -32,10 +32,23 @@ export interface IConnect {
 export interface IChatTab {
   key: string;
   name: string;
-  active : boolean;
+  active: boolean;
 }
 
 export interface IUserInfoItem {
-  title: string,
-  content: string
+  title: string;
+  content: string;
+}
+
+export enum CellType {
+  empty = 0,
+  ship = 1,
+  shoot = 2,
+}
+
+export interface ICell {
+  id : string,
+  row: number;
+  col: number;
+  type: CellType;
 }

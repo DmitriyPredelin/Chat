@@ -1,11 +1,8 @@
+import { CaretDownOutlined, FacebookOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from "antd";
 import { useSelector } from "react-redux";
 import { IUser } from "../../common/interface";
-import { getActiveFriend } from "../../store/selectors";
-import { FacebookOutlined, CaretDownOutlined, CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
-import { Button, Menu, Dropdown, Drawer } from "antd";
-import { wsURL } from "../../API/API";
-import { useState } from "react";
-
+import { getActiveFriend } from '../../store/chat-reducers/chat-selectors';
 
 
 const menu = (
@@ -22,16 +19,7 @@ const menu = (
 )
 
 export const FriendInfoPanel = (props: any) => {
-    const { clickExpanderIcon, expand } = props;
     let friend: IUser = useSelector(getActiveFriend);
-
-    const sendMessage = () => {
-        /*const ws = new WebSocket(wsURL);
-        ws.onopen = () => {
-            console.log("Подключение установлено");
-        }*/
-    }
-
 
     if (!friend) {
         return <></>
@@ -48,7 +36,7 @@ export const FriendInfoPanel = (props: any) => {
                         <Button ghost type="primary" shape="circle" icon={<FacebookOutlined />}></Button>
                     </div>
                     <div className="friend-profile__message-button">
-                        <Button className="friend-profile__message-button_send" block type="primary" onClick={sendMessage}>Cообщение</Button>
+                        <Button className="friend-profile__message-button_send" block type="primary">Cообщение</Button>
                         <Dropdown overlay={menu} placement="bottomRight">
                             <Button type="primary" >
                                 <CaretDownOutlined />

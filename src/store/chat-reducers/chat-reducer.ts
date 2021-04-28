@@ -1,5 +1,5 @@
-import { wsURL } from "../API/API";
-import { IChatTab, IMessage } from "../common/interface";
+import { wsURL } from "../../API/API";
+import { IChatTab, IMessage } from "../../common/interface";
 
 export const SET_MESSAGE = "SET_MESSAGE";
 export const SET_WEBSOCKET_CONNECT = "SET_WEBSOCKET_CONNECT";

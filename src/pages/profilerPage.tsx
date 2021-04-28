@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { IUser } from '../common/interface';
-import { getProfile } from '../store/selectors';
+import { getProfile } from '../store/profile-reducers/profile-selectors';
 
 export const ProfilePage = () => {
     const profile: IUser = useSelector(getProfile);

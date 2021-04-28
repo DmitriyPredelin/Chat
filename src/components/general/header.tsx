@@ -2,8 +2,8 @@ import { useEffect, useContext } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { IUser } from "../../common/interface"
 import { AuthContext } from "../../context/AuthContext"
-import { SET_PROFILE_SAGA } from "../../store/profile-reducer"
-import { getProfile } from "../../store/selectors"
+import { SET_PROFILE_SAGA } from "../../store/profile-reducers/profile-reducer"
+import { getProfile } from "../../store/profile-reducers/profile-selectors"
 
 export const Header = () => {
     const dispatch = useDispatch();

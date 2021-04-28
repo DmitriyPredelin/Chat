@@ -1,7 +1,6 @@
-import { useDispatch } from "react-redux";
-import { setActiveChannelAC } from "../../store/channel-reducer";
 import { Button } from 'antd';
-import {EditTwoTone} from '@ant-design/icons';
+import { useDispatch } from "react-redux";
+import { setActiveChannelAC } from "../../store/chat-reducers/channel-reducer";
 
 export const ChannelPanel = (props: any) => {
 

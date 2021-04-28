@@ -1,4 +1,4 @@
-import { IUser } from "../common/interface";
+import { IUser } from "../../common/interface";
 
 export const SET_FRIENDS = "SET_FRIENDS";
 export const SET_FRIENDS_SAGA = "SET_FRIENDS_SAGA";

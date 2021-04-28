@@ -2,9 +2,9 @@ import { CaretRightOutlined } from "@ant-design/icons";
 import { Avatar, Badge, List, Spin } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { IUser } from "../../common/interface";
-import { addTabAC, setActiveChatAC, setActiveTabAC } from "../../store/chat-reducer";
-import { setActiveFriendAC, setDriwerFriendAC } from "../../store/friend-reducer";
-import { getFriendsLoading, getUndeliveredMessage } from "../../store/selectors";
+import { addTabAC, setActiveChatAC, setActiveTabAC } from "../../store/chat-reducers/chat-reducer";
+import { setActiveFriendAC, setDriwerFriendAC } from "../../store/chat-reducers/friend-reducer";
+import { getFriendsLoading, getUndeliveredMessage } from "../../store/chat-reducers/chat-selectors";
 
 export const FriendListPanel = (props: any) => {
     const friends = props.panelList;
@@ -26,7 +26,7 @@ export const FriendListPanel = (props: any) => {
         dispatch(setActiveTabAC(friendId.toString()))
     }
 
-    const arRecordIdCountUndelivered: Array<{
+    const arRecordUndelivered: Array<{
         id: number;
         count: number;
     }> = useSelector(getUndeliveredMessage);
@@ -48,7 +48,7 @@ export const FriendListPanel = (props: any) => {
     return (
         <div className={props.expandedStyles} style={{ height: height }}>
             { friends.map((friend: IUser) => {
-                let record: { id: number, count: number } | undefined = arRecordIdCountUndelivered.find((record: { id: number; count: number; }) => {
+                let record: { id: number, count: number } | undefined = arRecordUndelivered.find((record: { id: number; count: number; }) => {
                     if (record.id === friend.id) {
                         return record
                     }
@@ -71,7 +71,7 @@ export const FriendListPanel = (props: any) => {
                             }
                             title={friend.name}
                         />
-                        <CaretRightOutlined style={{marginRight : '0px'}} onClick={() => showDriwer(friend.id)} />
+                        <CaretRightOutlined style={{ marginRight: '0px' }} onClick={() => showDriwer(friend.id)} />
                     </List.Item>
                 )
             })}

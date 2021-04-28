@@ -1,4 +1,4 @@
-import { IUser } from "../common/interface";
+import { IUser } from "../../common/interface";
 
 export const SET_PROFILE = "SET_PROFILE";
 export const SET_PROFILE_SAGA = "SET_PROFILE_SAGA";

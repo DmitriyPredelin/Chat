@@ -1,7 +1,7 @@
 import { Drawer, Button, Dropdown, Menu } from 'antd';
 import { useSelector } from 'react-redux';
 import { IUser } from '../../common/interface';
-import { getDriwerFriend } from '../../store/selectors';
+import { getDriwerFriend } from '../../store/chat-reducers/chat-selectors';
 import { CaretDownOutlined, FacebookOutlined } from '@ant-design/icons';
 import { IUserInfoItem } from "../../common/interface"
 

@@ -10,7 +10,8 @@ import AuthPage from "./pages/authPage"
 import { ProfilePage } from "./pages/profilerPage"
 import { Header } from './components/general/header';
 import { CalendarPage } from './pages/calendarPage'
-
+import { SeeBarkIcon } from './components/sea-battle/nav-icon'
+import {SeaBattlePage} from './pages/seaBattlePage'
 
 
 function App() {
@@ -47,6 +48,9 @@ function App() {
                 <FormatPainterOutlined className="button-panel__icons" />
               </Tooltip>
             </NavLink>
+            <NavLink to="sea_battle">
+              <SeeBarkIcon />
+            </NavLink>
           </div>
           <div className="button-panel_additional">
             <NavLink to="/profile">
@@ -69,7 +73,9 @@ function App() {
           <Route path="/calendar">
             <CalendarPage />
           </Route>
-
+          <Route path="/sea_battle">
+            <SeaBattlePage />
+          </Route>
           <Route exact path="/">
             {isAuthentificated ? <Redirect to="/chat" /> : <Redirect to="/auth" />}
           </Route>

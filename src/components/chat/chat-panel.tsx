@@ -1,10 +1,11 @@
 import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { Avatar, List } from 'antd';
+import { Message } from "components/general/message";
 import { useContext, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IMessage } from '../../common/interface';
 import { AuthContext } from '../../context/AuthContext';
-import { getMessages } from '../../store/selectors';
+import { getMessages } from "../../store/chat-reducers/chat-selectors";
 
 
 export const ChatPanel = (props: any) => {
@@ -14,11 +15,7 @@ export const ChatPanel = (props: any) => {
     const auth = useContext(AuthContext);
 
     const classNames = require("classnames");
-
     const data: Array<IMessage> = useSelector(getMessages(tabKey));
-    const dispatch = useDispatch();
-    //dispatch(setMessageIsSend(data));
-
 
     const send = () => {
         if (textValueRef && textValueRef.current && textValueRef.current.value) {
@@ -39,13 +36,12 @@ export const ChatPanel = (props: any) => {
             console.log(newMessage);
 
             wsSend(newMessage);
+            Message('sdf');
             textValueRef.current.value = '';
         }
     }
 
     const keyPressHandler = (e: any) => {
-        console.log(e.key);
-
         if (e.key === 'Enter') {
             e.preventDefault();
             send();
@@ -85,5 +81,4 @@ export const ChatPanel = (props: any) => {
             </div>
         </>
     )
-
 }

@@ -1,4 +1,4 @@
-import { IChatTab, IMessage, IUser } from "../common/interface";
+import { IChatTab, IMessage, IUser } from "common/interface";
 
 export const getChannels = (state: any) => {
   return state.channels.channels;
@@ -14,14 +14,6 @@ export const getFriendsLoading = (state: any) => {
 
 export const getActiveFriend = (state: any) => {
   return state.friends.friends.find((friend: IUser) => friend.active);
-};
-
-export const getConnectionId = (state: any) => {
-  return state.chat.connectionId;
-};
-
-export const getProfile = (state: any) => {
-  return state.profile;
 };
 
 export const getWebSocketConnection = (state: any) => {
@@ -64,9 +56,9 @@ export const getMessageFromTab = (id: any) => (state: any) => {
     (mes: IMessage) => mes.to_user === id || mes.from === id
   );
   /*let currentTab: IChatTab = state.chat.tabs.find((tab: IChatTab) => {
-    return tab.key === id;
-  });
-*/
+      return tab.key === id;
+    });
+  */
   return messages;
 };
 

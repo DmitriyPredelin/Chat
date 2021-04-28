@@ -1,8 +1,8 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
 import { API } from "../API/API";
-import { SET_CHANNELS_SAGA, setChannelsAC } from "./channel-reducer";
-import { setFriendsAC, SET_FRIENDS_SAGA } from "./friend-reducer";
-import { setProfileAC, SET_PROFILE_SAGA } from "./profile-reducer";
+import { SET_CHANNELS_SAGA, setChannelsAC } from "./chat-reducers/channel-reducer";
+import { setFriendsAC, SET_FRIENDS_SAGA } from "./chat-reducers/friend-reducer";
+import { setProfileAC, SET_PROFILE_SAGA } from "./profile-reducers/profile-reducer";
 
 //корневая
 export function* rootSaga() {

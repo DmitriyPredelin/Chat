@@ -1,0 +1,46 @@
+$SEE_BATLE_TABLE_SIZE : 500px;
+
+.sea-battle_main {
+    @include flexible_between();
+    flex : 1 1 400px;
+}
+
+.sea-battle__window {
+    border: 1px solid red;
+    flex : 1 1 0px;
+    height: 100%;
+    padding: 30px;
+
+    .sea-battle__marine {
+        border: 1px solid #6f828a;
+        height: $SEE_BATLE_TABLE_SIZE;
+        width: $SEE_BATLE_TABLE_SIZE;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-wrap:  wrap;
+        box-sizing: content-box;
+
+        .sea-battle__cell {
+            border: 1px solid #6f828a;
+            width : 10%;
+            box-sizing: border-box;
+            cursor: pointer;
+
+            
+
+            &.clicked {
+                background-color: black;
+            }
+
+            &.non-clicked {
+                background-color: white;
+                &:hover {
+                    background-color: rgba(111, 130, 138, .5);
+                    box-sizing: border-box;
+                    border: 1px solid rgba(111, 130, 138, .8);;
+                }
+            }
+        }
+    }
+}
+//111 130 138

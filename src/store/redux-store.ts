@@ -1,11 +1,12 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import channelReducer from "./channel-reducer";
-import friendReducer from "./friend-reducer";
+import channelReducer from "./chat-reducers/channel-reducer";
+import friendReducer from "./chat-reducers/friend-reducer";
 import createSagaMiddleware from "redux-saga";
 import { rootSaga} from "../store/sagas";
 import thunk from "redux-thunk";
-import chatReducer from "./chat-reducer";
-import profileReducer from "./profile-reducer";
+import chatReducer from "./chat-reducers/chat-reducer";
+import profileReducer from "./profile-reducers/profile-reducer";
+import seeBattleReducer from "./see-battle-reducers/see-battle-reducer";
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   channels: channelReducer,
   friends : friendReducer,
   chat : chatReducer,
-  profile : profileReducer
+  profile : profileReducer,
+  seeBattle : seeBattleReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk, sagaMiddleware));
