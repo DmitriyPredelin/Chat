@@ -13,8 +13,6 @@ export const FriendListPanel = (props: any) => {
 
     const dispatch = useDispatch();
     const setActiveFriend = (friendId: number, friendName: string) => {
-        console.log('setActiveFriend');
-
         //установим активного друга
         dispatch(setActiveFriendAC(friendId));
 

@@ -1,13 +1,13 @@
-$SEE_BATLE_TABLE_SIZE : 500px;
+$SEE_BATLE_TABLE_SIZE: 500px;
 
 .sea-battle_main {
     @include flexible_between();
-    flex : 1 1 400px;
+    flex: 1 1 400px;
 }
 
 .sea-battle__window {
     border: 1px solid red;
-    flex : 1 1 0px;
+    flex: 1 1 0px;
     height: 100%;
     padding: 30px;
 
@@ -17,16 +17,14 @@ $SEE_BATLE_TABLE_SIZE : 500px;
         width: $SEE_BATLE_TABLE_SIZE;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         display: flex;
-        flex-wrap:  wrap;
+        flex-wrap: wrap;
         box-sizing: content-box;
 
         .sea-battle__cell {
             border: 1px solid #6f828a;
-            width : 10%;
+            width: 10%;
             box-sizing: border-box;
             cursor: pointer;
-
-            
 
             &.clicked {
                 background-color: black;
@@ -35,12 +33,21 @@ $SEE_BATLE_TABLE_SIZE : 500px;
             &.non-clicked {
                 background-color: white;
                 &:hover {
-                    background-color: rgba(111, 130, 138, .5);
+                    background-color: rgba(111, 130, 138, 0.5);
                     box-sizing: border-box;
-                    border: 1px solid rgba(111, 130, 138, .8);;
+                    border: 1px solid rgba(111, 130, 138, 0.8);
                 }
             }
         }
     }
 }
-//111 130 138
+
+.unselectable {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                    not supported by any browser */
+}

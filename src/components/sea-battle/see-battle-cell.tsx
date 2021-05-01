@@ -1,6 +1,6 @@
 import { CellType, ICell } from "common/interface";
 import { useDispatch } from "react-redux";
-import { setCellClickAC } from "store/see-battle-reducers/see-battle-reducer";
+import { setCellClickAC } from "store/sea-battle-reducers/sea-battle-reducer";
 
 export const SeeBattleCell = (props: any) => {
     const classNames = require("classnames");

@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 
 
@@ -8,7 +8,7 @@ export const WrapperPanel = (props: any) => {
     const [expanded, setExpanded] = useState(true);
 
     const { titleText, selector } = props;
-    let panelList: Array<any> = useSelector(selector);
+    let panelList: Array<any> = useSelector(selector) ;
 
     const onClickExpander = () => {
         setExpanded((prev) => !prev)

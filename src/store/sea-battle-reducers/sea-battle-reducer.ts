@@ -18,7 +18,7 @@ const defaultStore = {
   isInit: false,
 };
 
-const seeBattleReducer = (state = defaultStore, action: any) => {
+const seaBattleReducer = (state = defaultStore, action: any) => {
   let newMatrix: ICell[][];
   //console.log(action.type);
   switch (action.type) {
@@ -129,4 +129,4 @@ export const resetMatrixAC = (affil: number) => {
   };
 };
 
-export default seeBattleReducer;
+export default seaBattleReducer;

@@ -50,5 +50,6 @@ export interface ICell {
   id : string,
   row: number;
   col: number;
+  affil : number;
   type: CellType;
 }

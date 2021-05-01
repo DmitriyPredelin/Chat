@@ -6,7 +6,7 @@ import { rootSaga} from "../store/sagas";
 import thunk from "redux-thunk";
 import chatReducer from "./chat-reducers/chat-reducer";
 import profileReducer from "./profile-reducers/profile-reducer";
-import seeBattleReducer from "./see-battle-reducers/see-battle-reducer";
+import seeBattleReducer from "./sea-battle-reducers/sea-battle-reducer";
 
 
 const sagaMiddleware = createSagaMiddleware();

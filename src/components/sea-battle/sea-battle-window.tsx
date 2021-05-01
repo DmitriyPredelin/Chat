@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { initMatrixAC, resetMatrixAC } from "store/see-battle-reducers/see-battle-reducer";
-import { getMatrix, getMatrixInit } from "store/see-battle-reducers/see-battle-selector";
+import { initMatrixAC, resetMatrixAC } from "store/sea-battle-reducers/sea-battle-reducer";
+import { getMatrix, getMatrixInit } from "store/sea-battle-reducers/see-battle-selector";
 import { ICell } from "../../common/interface";
 import { SeeBattleCell } from "./see-battle-cell";
 

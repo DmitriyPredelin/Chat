@@ -16,7 +16,7 @@ export const Header = () => {
         }
     }, [profileId])
     
-    const profile : IUser= useSelector(getProfile)
+    const profile : IUser = useSelector(getProfile)
     return (
         <div className="header">
             <div className="title-panel__chat-title">Chatter</div>
