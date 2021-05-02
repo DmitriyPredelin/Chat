@@ -1,40 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initMatrixAC, resetMatrixAC } from "store/sea-battle-reducers/sea-battle-reducer";
 import { getMatrix, getMatrixInit } from "store/sea-battle-reducers/see-battle-selector";
 import { ICell } from "../../common/interface";
 import { SeeBattleCell } from "./see-battle-cell";
 
-interface ICellRowProps  {
-    row : ICell[],
-    setDown : React.Dispatch<React.SetStateAction<boolean>>,
-    down : boolean,
-    affil : number
+interface ISeaBattleWindowProps {
+    affil: number,
+    socket: WebSocket
 }
-
-interface ISeaBattleWindowProps  {
-    affil : number
-}
-
-const CellRow = ({row, setDown, down, affil} : ICellRowProps) => {
-    return <>
-        {row.map((cell: ICell) => {
-            return <SeeBattleCell key={cell.id} cell={cell} setDown={setDown} down={down} affil={affil}/>
-        })}
-    </>;
-}
-
-export const SeaBattleWindow = ({affil} : ISeaBattleWindowProps) => {
+export const SeaBattleWindow = ({ affil, socket }: ISeaBattleWindowProps) => {
     const dispatch = useDispatch();
     const [down, setDown] = useState(false);
-    let matrix = [];
-    
+    const [state, setstate] = useState("");
+    //const [shotCells, setShotCells] = useState<Array<string>>([]);
+    const shotCells = useRef<Array<string>>([]);
+   
 
-    useEffect(() => {
-        dispatch(initMatrixAC(affil));
-    }, [])
-
-    matrix = useSelector(getMatrix(affil));
+    let matrix = useSelector(getMatrix(affil));
     const matrixIsInit = useSelector(getMatrixInit);
 
     const clickReset = () => {
@@ -49,9 +32,19 @@ export const SeaBattleWindow = ({affil} : ISeaBattleWindowProps) => {
 
     return (
         <div className="sea-battle__window">
-            <div className="sea-battle__marine" onMouseLeave={() => setDown(false)}>
-                {matrix.map((row: ICell[], index: number) => {
-                    return <CellRow key={index} row={row} setDown={setDown} down={down} affil={affil}/>
+            <div className="sea-battle__marine unselectable" onMouseLeave={() => setDown(false)}>
+                {matrix.map((row: ICell[]) => {
+                    return row.map((cell: ICell) => {
+                        return <SeeBattleCell
+                            key={cell.id}
+                            cell={cell}
+                            setDown={setDown}
+                            down={down}
+                            affil={affil}
+                            setstate={setstate}
+                            socket={socket}
+                            shotCells={shotCells} />
+                    })
                 })}
             </div>
             <button onClick={clickReset}>Очистить</button>

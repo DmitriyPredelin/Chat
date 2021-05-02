@@ -6,7 +6,7 @@ $SEE_BATLE_TABLE_SIZE: 500px;
 }
 
 .sea-battle__window {
-    border: 1px solid red;
+    border: 1px solid $BACKGROUND_LIGHT;
     flex: 1 1 0px;
     height: 100%;
     padding: 30px;
@@ -26,7 +26,7 @@ $SEE_BATLE_TABLE_SIZE: 500px;
             box-sizing: border-box;
             cursor: pointer;
 
-            &.clicked {
+            &.mine.ship {
                 background-color: black;
             }
 
@@ -36,6 +36,72 @@ $SEE_BATLE_TABLE_SIZE: 500px;
                     background-color: rgba(111, 130, 138, 0.5);
                     box-sizing: border-box;
                     border: 1px solid rgba(111, 130, 138, 0.8);
+                }
+            }
+
+            &.miss {
+                position: relative;
+
+                &:before,
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    border-bottom: 3px solid #111;
+                    width: 100%;
+                }
+                &:before {
+                    transform: rotate(-45deg);
+                }
+                &:after {
+                    transform: rotate(45deg);
+                }
+            }
+
+            &.shot {
+                position: relative;
+                background-color: black;
+
+                &:before,
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    border-bottom: 3px solid white;
+                    width: 100%;
+                }
+                &:before {
+                    transform: rotate(-45deg);
+                }
+                &:after {
+                    transform: rotate(45deg);
+                }
+            }
+
+            &.enemy.ship {
+                background-color: white;
+                position: relative;
+
+                &:after,
+                &:before {
+                    content: "";
+                    width: 20px;
+                    height: 5px;
+                    background-color: rgb(153, 33, 33);
+                    top: 21px;
+                    left: 13.5px;
+                    position: absolute;
+                    border-radius: 10px;
+                }
+
+                &:after {
+                    transform: rotate(-40deg);
+                }
+
+                &:before {
+                    transform: rotate(40deg);
                 }
             }
         }
@@ -48,6 +114,5 @@ $SEE_BATLE_TABLE_SIZE: 500px;
     -khtml-user-select: none; /* Konqueror */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                    not supported by any browser */
+    user-select: none; /* Non-prefixed version, currently not supported by any browser */
 }

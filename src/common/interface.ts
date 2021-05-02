@@ -41,9 +41,10 @@ export interface IUserInfoItem {
 }
 
 export enum CellType {
-  empty = 0,
-  ship = 1,
-  shoot = 2,
+  empty = 0, //пусто
+  ship = 1, //корабль
+  miss = 2, //промах
+  shot = 3 //попадение в корабль
 }
 
 export interface ICell {
@@ -53,3 +54,12 @@ export interface ICell {
   affil : number;
   type: CellType;
 }
+
+
+export interface IShot {
+  cellId : string;
+  from : number;
+  to_user : number;
+  type : string
+}
+

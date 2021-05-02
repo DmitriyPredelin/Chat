@@ -9,3 +9,7 @@ export const getMatrix = (affil: number) => (state: any) => {
 export const getMatrixInit = (state: any) => {
   return state.seeBattle.isInit;
 };
+
+/*export const getShotCell = (state: any) => {
+  return state.seeBattle.isInit;
+};*/

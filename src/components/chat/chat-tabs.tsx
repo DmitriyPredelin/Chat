@@ -6,6 +6,7 @@ import { ChatPanel } from "./chat-panel"
 import { IChatTab, IConnect, IMessage } from '../../common/interface';
 import { useContext, useEffect, useRef } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { wsSend } from 'components/general/common';
 
 export const ChatTabs = () => {
 
@@ -45,7 +46,6 @@ export const ChatTabs = () => {
         }
         console.log(incomMessage);
         dispatch(addMessageAC(newMessage));
-        //return setItems((prevItems: Array<IMessage>) => [...prevItems, JSON.parse(e.data)]);
     }
 
     //установка сокет соединения
@@ -56,7 +56,7 @@ export const ChatTabs = () => {
             userId: auth.userId,
             type: 'connect'
         }
-        wsSend(newConnect);
+        wsSend(socket, newConnect);
     }
 
     //подписки сокета
@@ -77,20 +77,7 @@ export const ChatTabs = () => {
     useEffect(() => {
         console.log('useEffect activeTabKey');
     }, [activeTabKey])
-
-    //процедура отправки
-    const wsSend = function (data: {}) {
-        if (socket !== null) {
-            if (!socket.readyState) {
-                setTimeout(function () {
-                    wsSend(data);
-                }, 100);
-            } else {
-                console.log(JSON.stringify(data));
-                socket.send(JSON.stringify(data));
-            }
-        }
-    };
+    
 
     const { TabPane } = Tabs;
     const tabs = useSelector(getChatTabs);
@@ -120,8 +107,8 @@ export const ChatTabs = () => {
             style={{ height: "100%" }}
         >
             {tabs.map((tab: IChatTab) => (
-                <TabPane  tab={tab.name} key={tab.key}>
-                    <ChatPanel wsSend={wsSend} tabKey={parseInt(tab.key)}/>
+                <TabPane tab={tab.name} key={tab.key}>
+                    <ChatPanel wsSend={wsSend} tabKey={parseInt(tab.key)} />
                 </TabPane>
             ))}
         </Tabs>
