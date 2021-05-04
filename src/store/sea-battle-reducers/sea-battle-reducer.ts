@@ -94,7 +94,7 @@ const seaBattleReducer = (state = defaultStore, action: any) => {
           };
         }
       }
-      if (action.affil == 1) {
+      if (action.affil === 1) {
         return { ...state, myMatrix: [...newMatrix], isInit: true };
       } else {
         return { ...state, enemyMatrix: [...newMatrix], isInit: true };
@@ -105,7 +105,7 @@ const seaBattleReducer = (state = defaultStore, action: any) => {
         newMatrix,
         action.cell
       );
-      if (cell.id != "") {
+      if (cell.id !== "") {
         switch (action.cell.type) {
           case CellType.empty:
             cell.type = CellType.ship;
@@ -123,7 +123,7 @@ const seaBattleReducer = (state = defaultStore, action: any) => {
       let dblClickedRow = obj.clickedRow;
       let dblClickedCol = obj.clickedCol;
 
-      if (dblCell.id != "") {
+      if (dblCell.id !== "") {
         dblCell.type = CellType.empty;
       }
 
@@ -139,7 +139,6 @@ const seaBattleReducer = (state = defaultStore, action: any) => {
       }
 
     case SEND_SHOT:
-      console.log(SEND_SHOT);
       newMatrix = state.myMatrix; //стреляют всегда в меня
 
       let { shotCell, shootingRow, shootingCol } = getSearchCellForId(

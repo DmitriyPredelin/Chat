@@ -69,10 +69,8 @@ export const FriendListPanel = (props: any) => {
     return (
         <div className={props.expandedStyles} style={{ height: height }}>
             { friends.map((friend: IUser) => {
-                let record: { id: number, count: number } | undefined = arRecordUndelivered.find((record: { id: number; count: number; }) => {
-                    if (record.id === friend.id) {
-                        return record
-                    }
+                let record: { id: number, count: number } | undefined = arRecordUndelivered.find((rec: { id: number; count: number }) => {
+                    return rec.id === friend.id
                 })
                 if (!record) {
                     record = {

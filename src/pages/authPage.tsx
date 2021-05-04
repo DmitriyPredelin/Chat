@@ -1,20 +1,18 @@
-import React, { useContext, useState } from 'react';
-import { useHttp } from "../hooks/useHttp";
-import { AuthContext } from "../context/AuthContext";
-import { useHistory } from 'react-router';
-import { useForm } from "react-hook-form";
-import { Input, Button, Tooltip } from 'antd';
 import { UnlockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Input } from 'antd';
+import React, { useContext, useState } from 'react';
+import { useForm } from "react-hook-form";
+import { useHistory } from 'react-router';
 import { Message } from '../components/general/message';
+import { AuthContext } from "../context/AuthContext";
+import { useHttp } from "../hooks/useHttp";
 
 
-const AuthPage = (props: any) => {
+const AuthPage = () => {
     const auth = useContext(AuthContext);
     const history = useHistory();
-    const [show, setShow] = useState(false);
 
-    const { loading, error, request, clearError } = useHttp();
-
+    const { loading, request } = useHttp();
     const [form, setForm] = useState({ email: '', password: '' });
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +21,7 @@ const AuthPage = (props: any) => {
 
     const registerHandler = async () => {
         try {
-            const data = await request(`/register`, 'POST', { ...form });
+            await request(`/register`, 'POST', { ...form });
             Message({ text: "Пользователь успешно зарегистрирован" });
         } catch (e) {
             Message({ text: e.message });
@@ -48,11 +46,7 @@ const AuthPage = (props: any) => {
         }
     };
 
-    const { register, handleSubmit, watch, errors } = useForm();
-
-    const visibleTooltip = () => {
-        setTimeout(() => setShow(true), 1000)
-    }
+    const { register } = useForm();
 
     const keyPressHandler = (e: any) => {
         if (e.key === 'Enter') {
@@ -68,19 +62,16 @@ const AuthPage = (props: any) => {
                 <div className="auth_element-panel">
                     <h4 className="auth_name">Авторизация</h4>
                     <label className="auth_label" htmlFor="email">Введите Email</label>
-                    <Tooltip placement="right" title={'wefwef'} visible={show}>
-                        <Input placeholder="Введите email"
-                            className="auth_input"
-                            prefix={<UserOutlined className="site-form-item-icon" />}
-                            id="email"
-                            name="email"
-                            type="email"
-                            defaultValue="" ref={register}
-                            onChange={changeHandler}
-                            onKeyPress={keyPressHandler}
-                        />
-                    </Tooltip>
-
+                    <Input placeholder="Введите email"
+                        className="auth_input"
+                        prefix={<UserOutlined className="site-form-item-icon" />}
+                        id="email"
+                        name="email"
+                        type="email"
+                        defaultValue="" ref={register}
+                        onChange={changeHandler}
+                        onKeyPress={keyPressHandler}
+                    />
                     <label className="auth_label" htmlFor="email">Введите пароль</label>
                     <Input placeholder="Введите пароль"
                         className="auth_input"
@@ -103,14 +94,9 @@ const AuthPage = (props: any) => {
                         type="primary"
                         danger
                         onClick={registerHandler}>Регистрация</Button>
-
                 </div>
-
             </div>
         </div>
-
-
-
     )
 };
 

@@ -11,8 +11,8 @@ export const CalendarPage = () => {
         <div className="calendar-general">
             <div>Апрель 2021</div>
             <div className="calendar-panel">
-                {massiv.map(() => {
-                    return <CalendarDay />
+                {massiv.map((_, index) => {
+                    return <CalendarDay key={index} />
                 })}
             </div>
         </div>

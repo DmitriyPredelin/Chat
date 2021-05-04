@@ -1,13 +1,13 @@
 import { Tabs } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { getActiveTabsKey, getChatTabs, getWebSocketConnection } from "../../store/chat-reducers/chat-selectors";
-import { addMessageAC, removeTabAC, setActiveTabAC, SET_WEBSOCKET_CONNECT } from '../../store/chat-reducers/chat-reducer';
-import { ChatPanel } from "./chat-panel"
-import { IChatTab, IConnect, IMessage } from '../../common/interface';
-import { useContext, useEffect, useRef } from 'react';
-import { AuthContext } from '../../context/AuthContext';
 import { wsSend } from 'components/general/common';
+import { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setOnlineFriendAC } from 'store/chat-reducers/friend-reducer';
+import { IChatTab, IMessage } from '../../common/interface';
+import { AuthContext } from '../../context/AuthContext';
+import { addMessageAC, removeTabAC, setActiveTabAC } from '../../store/chat-reducers/chat-reducer';
+import { getActiveTabsKey, getChatTabs, getWebSocketConnection } from "../../store/chat-reducers/chat-selectors";
+import { ChatPanel } from "./chat-panel";
 
 export const ChatTabs = () => {
 

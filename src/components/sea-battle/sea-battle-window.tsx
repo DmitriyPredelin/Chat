@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initMatrixAC, resetMatrixAC } from "store/sea-battle-reducers/sea-battle-reducer";
 import { getMatrix, getMatrixInit } from "store/sea-battle-reducers/see-battle-selector";
 import { ICell } from "../../common/interface";
 import { SeeBattleCell } from "./see-battle-cell";
+import { Spin } from 'antd';
 
 interface ISeaBattleWindowProps {
     affil: number,
@@ -13,9 +14,8 @@ export const SeaBattleWindow = ({ affil, socket }: ISeaBattleWindowProps) => {
     const dispatch = useDispatch();
     const [down, setDown] = useState(false);
     const [state, setstate] = useState("");
-    //const [shotCells, setShotCells] = useState<Array<string>>([]);
     const shotCells = useRef<Array<string>>([]);
-   
+
 
     let matrix = useSelector(getMatrix(affil));
     const matrixIsInit = useSelector(getMatrixInit);
@@ -27,7 +27,7 @@ export const SeaBattleWindow = ({ affil, socket }: ISeaBattleWindowProps) => {
     }
 
     if (!matrixIsInit) {
-        return <></>
+        return <Spin size="large" />
     }
 
     return (
