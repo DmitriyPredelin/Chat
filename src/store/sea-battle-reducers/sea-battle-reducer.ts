@@ -1,5 +1,4 @@
-import { wsSend } from "components/general/common";
-import { CellType, IUser, ICell, IShot } from "../../common/interface";
+import { CellType, ICell, IShot } from "../../common/interface";
 
 export const INIT_MATRIX = "INIT_MATRIX";
 export const SET_CELL_CLICK = "SET_CELL_CLICK";

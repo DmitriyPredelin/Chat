@@ -1,15 +1,21 @@
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Avatar, Badge, List, Spin } from 'antd';
+import { wsSend } from "components/general/common";
+import { AuthContext } from "context/AuthContext";
+import { useContext, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IUser } from "../../common/interface";
 import { addTabAC, setActiveChatAC, setActiveTabAC } from "../../store/chat-reducers/chat-reducer";
+import { getFriendsLoading, getUndeliveredMessage, getWebSocketConnection } from "../../store/chat-reducers/chat-selectors";
 import { setActiveFriendAC, setDriwerFriendAC } from "../../store/chat-reducers/friend-reducer";
-import { getFriendsLoading, getUndeliveredMessage } from "../../store/chat-reducers/chat-selectors";
 
 export const FriendListPanel = (props: any) => {
+    const auth = useContext(AuthContext)
     const friends = props.panelList;
     const setProfileVisible = props.setProfileVisible;
     const loading = useSelector(getFriendsLoading);
+    const classNames = require("classnames");
+    const socket: WebSocket = useSelector(getWebSocketConnection);
 
     const dispatch = useDispatch();
     const setActiveFriend = (friendId: number, friendName: string) => {
@@ -29,9 +35,22 @@ export const FriendListPanel = (props: any) => {
         count: number;
     }> = useSelector(getUndeliveredMessage);
 
-    if (loading) {
-        return <Spin size="large" />
-    }
+    const timer = useRef<any>();
+
+    useEffect(() => {
+        timer.current = setInterval(() => {
+            let newMessage = {
+                id: auth.userId,
+                type: "online_friend"
+            }
+            console.log(newMessage);
+            wsSend(socket, newMessage);
+        }, 3000)
+        return () => {
+            clearInterval(timer.current)
+        }
+
+    }, [auth]);
 
     let height = "0px";
     if (props.expanded) {
@@ -41,6 +60,10 @@ export const FriendListPanel = (props: any) => {
     const showDriwer = (driwerFriendId: number) => {
         dispatch(setDriwerFriendAC(driwerFriendId));
         setProfileVisible(true);
+    }
+
+    if (loading) {
+        return <Spin size="large" />
     }
 
     return (
@@ -58,9 +81,15 @@ export const FriendListPanel = (props: any) => {
                     }
                 }
 
+                let friendOnlineStatus: string = classNames(
+                    { "friend__online-status": friend.isOnline },
+                    { "friend__offline-status": !friend.isOnline }
+                );
+
                 return (
+
                     <List.Item className="friend" key={friend.id} onClick={() => setActiveFriend(friend.id, friend.name)}>
-                        <div className="friend__online-status"></div>
+                        <div className={friendOnlineStatus}></div>
                         <List.Item.Meta
                             avatar={
                                 <Badge count={record.count} size="small" showZero={false}>
@@ -73,6 +102,7 @@ export const FriendListPanel = (props: any) => {
                     </List.Item>
                 )
             })}
+
         </div>
     )
 }

@@ -3,16 +3,7 @@ import { IUser } from "../../common/interface";
 export const SET_PROFILE = "SET_PROFILE";
 export const SET_PROFILE_SAGA = "SET_PROFILE_SAGA";
 
-const defaultStore: IUser = {
-  id: 0,
-  name: "",
-  src: "",
-  email: "",
-  skype: "",
-  user_status: "",
-  active: false,
-  nickname : ""
-};
+const defaultStore: IUser = {} as IUser;
 
 const profileReducer = (state = defaultStore, action: any) => {
   switch (action.type) {

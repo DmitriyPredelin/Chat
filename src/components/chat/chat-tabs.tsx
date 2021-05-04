@@ -7,6 +7,7 @@ import { IChatTab, IConnect, IMessage } from '../../common/interface';
 import { useContext, useEffect, useRef } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { wsSend } from 'components/general/common';
+import { setOnlineFriendAC } from 'store/chat-reducers/friend-reducer';
 
 export const ChatTabs = () => {
 
@@ -16,10 +17,6 @@ export const ChatTabs = () => {
     const dispatch = useDispatch();
     const socket: WebSocket = useSelector(getWebSocketConnection);
 
-    if (!socket) {
-        dispatch({ type: SET_WEBSOCKET_CONNECT });
-    }
-
     //ключ активного таба
     const activeTabKey = useSelector(getActiveTabsKey);
 
@@ -28,28 +25,36 @@ export const ChatTabs = () => {
         const incomMessage: IMessage = JSON.parse(e.data);
         let isSend: number = 0;
 
-        if (activeTabKey && parseInt(activeTabKey) === incomMessage.from) {
-            isSend = 1;
-        }
+        switch (incomMessage.type) {
+            case "text":
+                if (activeTabKey && parseInt(activeTabKey) === incomMessage.from) {
+                    isSend = 1;
+                }
 
-        const newMessage: IMessage = {
-            id: 1,
-            text: incomMessage.text,
-            from: incomMessage.from,
-            fromName: incomMessage.fromName,
-            to_user: incomMessage.to_user,
-            to_channel: 0,
-            is_send: isSend,
-            type: 'text',
-            timeStamp: Date.now(),
-            author_src: incomMessage.author_src
+                const newMessage: IMessage = {
+                    id: 1,
+                    text: incomMessage.text,
+                    from: incomMessage.from,
+                    fromName: incomMessage.fromName,
+                    to_user: incomMessage.to_user,
+                    to_channel: 0,
+                    is_send: isSend,
+                    type: 'text',
+                    timeStamp: Date.now(),
+                    author_src: incomMessage.author_src
+                }
+                console.log(incomMessage);
+                dispatch(addMessageAC(newMessage));
+                break;
+
+            case "online_friend":
+                console.log(JSON.parse(e.data));
+                dispatch(setOnlineFriendAC(JSON.parse(e.data).users));
         }
-        console.log(incomMessage);
-        dispatch(addMessageAC(newMessage));
     }
 
     //установка сокет соединения
-    const setConnection = () => {
+    /*const setConnection = () => {
         console.log('setConnection');
 
         let newConnect: IConnect = {
@@ -57,27 +62,27 @@ export const ChatTabs = () => {
             type: 'connect'
         }
         wsSend(socket, newConnect);
-    }
+    }*/
 
     //подписки сокета
     useEffect(() => {
-        console.log('useEffect auth');
+        console.log('useEffect ChatTabs');
 
         if (socket !== null) {
-            socket.addEventListener("open", setConnection)
+            //socket.addEventListener("open", setConnection)
             socket.addEventListener("message", setMessage);
+            return () => {
+                socket.removeEventListener("message", setMessage, false);
+                //socket.removeEventListener("open", setConnection, false);
+            }
         }
 
-        return () => {
-            socket.removeEventListener("message", setMessage, false);
-            socket.removeEventListener("open", setConnection, false);
-        }
     }, [auth])
 
     useEffect(() => {
         console.log('useEffect activeTabKey');
     }, [activeTabKey])
-    
+
 
     const { TabPane } = Tabs;
     const tabs = useSelector(getChatTabs);
@@ -108,7 +113,7 @@ export const ChatTabs = () => {
         >
             {tabs.map((tab: IChatTab) => (
                 <TabPane tab={tab.name} key={tab.key}>
-                    <ChatPanel wsSend={wsSend} tabKey={parseInt(tab.key)} />
+                    <ChatPanel wsSend={wsSend} tabKey={parseInt(tab.key)} socket={socket} />
                 </TabPane>
             ))}
         </Tabs>

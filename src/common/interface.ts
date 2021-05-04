@@ -9,6 +9,7 @@ export interface IUser {
   user_status: string;
   active: boolean;
   nickname: string;
+  isOnline : boolean;
 }
 
 export interface IMessage {

@@ -1,23 +1,60 @@
-import './styles.scss';
 import 'antd/dist/antd.css';
-import { AuthContext } from "./context/AuthContext";
-import { MessageOutlined, CalendarOutlined, FormatPainterOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
-import { Switch, Route, NavLink, Redirect } from 'react-router-dom'
-import { ChatPage } from './pages/chatPage';
-import { useAuth } from './hooks/useAuth';
-import AuthPage from "./pages/authPage"
-import { ProfilePage } from "./pages/profilerPage"
+import { wsURL } from 'API/API';
+import { IConnect } from 'common/interface';
+import { wsSend } from 'components/general/common';
+import { Routing } from 'components/general/routing';
+import { SidePanel } from 'components/general/side-panel';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { SET_WEBSOCKET_CONNECT } from 'store/chat-reducers/chat-reducer';
 import { Header } from './components/general/header';
-import { CalendarPage } from './pages/calendarPage'
-import { SeeBarkIcon } from './components/sea-battle/nav-icon'
-import {SeaBattlePage} from './pages/seaBattlePage'
-
+import { AuthContext } from "./context/AuthContext";
+import { useAuth } from './hooks/useAuth';
+import AuthPage from "./pages/authPage";
+import './styles.scss';
 
 function App() {
-
   const { login, logout, token, userId, email } = useAuth();
   const isAuthentificated = !!token;
+
+  const dispatch = useDispatch();
+
+  /*const socket: WebSocket = useSelector(getWebSocketConnection);
+
+  if (!socket) {
+    dispatch({ type: SET_WEBSOCKET_CONNECT });
+  }*/
+
+  //установка сокет соединения
+  const setConnection = (userId: number, socket: WebSocket) => {
+    console.log('setConnection');
+
+    let newConnect: IConnect = {
+      userId: userId,
+      type: 'connect'
+    }
+    wsSend(socket, newConnect);
+  }
+
+  console.log(userId);
+
+  useEffect(() => {
+    if (isAuthentificated && userId !== 0) {
+      console.log('CONNECT SOC');
+
+      const socket: WebSocket = new WebSocket(wsURL);
+      dispatch({ type: SET_WEBSOCKET_CONNECT, socket: socket });
+
+      console.log('useEffect auth');
+      socket.addEventListener("open", () => setConnection(userId, socket))
+
+      return () => {
+        socket.removeEventListener("open", () => setConnection(userId, socket), false);
+      }
+    }
+  }, [userId])
+
+
 
   if (!isAuthentificated) {
     return (
@@ -31,55 +68,8 @@ function App() {
     <AuthContext.Provider value={{ token, userId, login, logout, isAuthentificated, email }}>
       <Header />
       <div className="container">
-        <div className="nav-left">
-          <div className="button-panel_main">
-            <NavLink to="/chat">
-              <Tooltip overlay="Чат" mouseEnterDelay={0.5}>
-                <MessageOutlined className="button-panel__icons" />
-              </Tooltip>
-            </NavLink>
-            <NavLink to="/calendar">
-              <Tooltip overlay="Календарь" mouseEnterDelay={0.5}>
-                <CalendarOutlined className="button-panel__icons" />
-              </Tooltip>
-            </NavLink>
-            <NavLink to="/paint">
-              <Tooltip overlay="Рисовать" mouseEnterDelay={0.5}>
-                <FormatPainterOutlined className="button-panel__icons" />
-              </Tooltip>
-            </NavLink>
-            <NavLink to="sea_battle">
-              <SeeBarkIcon />
-            </NavLink>
-          </div>
-          <div className="button-panel_additional">
-            <NavLink to="/profile">
-              <Tooltip overlay="Настройки профиля" mouseEnterDelay={0.5}>
-                <UserOutlined className="button-panel__icons" />
-              </Tooltip>
-            </NavLink>
-            <Tooltip overlay="Выйти из чатика" mouseEnterDelay={0.5}>
-              <LogoutOutlined className="button-panel__icons" onClick={logout} />
-            </Tooltip>
-          </div>
-        </div >
-        <Switch>
-          <Route path="/chat">
-            <ChatPage />
-          </Route>
-          <Route path="/profile">
-            <ProfilePage />
-          </Route>
-          <Route path="/calendar">
-            <CalendarPage />
-          </Route>
-          <Route path="/sea_battle">
-            <SeaBattlePage />
-          </Route>
-          <Route exact path="/">
-            {isAuthentificated ? <Redirect to="/chat" /> : <Redirect to="/auth" />}
-          </Route>
-        </Switch>
+        <SidePanel logout={logout} />
+        <Routing isAuthentificated={isAuthentificated} />
       </div >
     </AuthContext.Provider>
   );

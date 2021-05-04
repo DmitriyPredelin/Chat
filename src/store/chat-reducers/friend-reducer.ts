@@ -4,18 +4,10 @@ export const SET_FRIENDS = "SET_FRIENDS";
 export const SET_FRIENDS_SAGA = "SET_FRIENDS_SAGA";
 export const SET_ACTIVE_FRIEND = "SET_ACTIVE_FRIEND";
 export const SET_DRIWER_FRIEND = "SET_DRIWER_FRIEND";
+export const SET_ONLINE_FRIENDS = "SET_ONLINE_FRIENDS";
 
 const defaultStore = {
-  friends: [
-    {
-      id: 1,
-      name: "",
-      src: "",
-      email: "",
-      skype: "",
-      active: false,
-    },
-  ],
+  friends: [] as Array<IUser>,
   loading: true,
   drawerFriend: -1,
 };
@@ -28,17 +20,26 @@ const friendReducer = (state = defaultStore, action: any) => {
       return { ...state, friends: action.friends, loading: false };
 
     case SET_ACTIVE_FRIEND:
-      copyState.friends.forEach((friend) => {
+      copyState.friends.forEach((friend: IUser) => {
         friend.active = false;
       });
-      let friend = copyState.friends.find((x: any) => x.id === action.friendId);
+      let friend = copyState.friends.find(
+        (x: IUser) => x.id === action.friendId
+      );
       if (friend !== undefined) {
         friend.active = true;
       }
       return copyState;
 
-    case SET_DRIWER_FRIEND : 
-      return { ...state, drawerFriend: action.drawerFriendId }; 
+    case SET_DRIWER_FRIEND:
+      return { ...state, drawerFriend: action.drawerFriendId };
+
+    case SET_ONLINE_FRIENDS:
+      copyState.friends.forEach((friend: IUser) => {
+        friend.isOnline = action.friendsIds.includes(friend.id) ? true : false;
+      });
+
+      return copyState;
   }
 
   return { ...state };
@@ -57,6 +58,11 @@ export const setActiveFriendAC = (friendId: number) => ({
 export const setDriwerFriendAC = (drawerFriendId: number) => ({
   type: SET_DRIWER_FRIEND,
   drawerFriendId: drawerFriendId,
+});
+
+export const setOnlineFriendAC = (friendsIds: Array<number>) => ({
+  type: SET_ONLINE_FRIENDS,
+  friendsIds: friendsIds,
 });
 
 export default friendReducer;

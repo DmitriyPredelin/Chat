@@ -26,7 +26,7 @@ const chatReducer = (state = defaultStore, action: any) => {
 
   switch (action.type) {
     case SET_WEBSOCKET_CONNECT:
-      return { ...state, socket: new WebSocket(wsURL) };
+      return { ...state, socket: action.socket };
 
     case SET_ACTIVE_CHAT:
       return { ...state, activeChat: true };
@@ -41,12 +41,11 @@ const chatReducer = (state = defaultStore, action: any) => {
       let idx = copyState.tabs.findIndex((tab: IChatTab) => {
         return tab.key === action.key.toString();
       });
-      
-      
+
       if (idx === -1) {
         copyState.tabs.push(newTabs);
       }
- 
+
       return copyState;
 
     case REMOVE_TAB:
@@ -97,8 +96,9 @@ const chatReducer = (state = defaultStore, action: any) => {
   return { ...state };
 };
 
-export const setWebsocketConnectAC = () => ({
+export const setWebsocketConnectAC = (socket: WebSocket) => ({
   type: SET_WEBSOCKET_CONNECT,
+  socket: socket,
 });
 
 export const setActiveChatAC = () => ({

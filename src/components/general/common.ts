@@ -1,5 +1,7 @@
 //процедура отправки
 export const wsSend = function (socket: WebSocket, data: {}) {
+ // console.log(socket);
+  
   if (socket !== null) {
     if (!socket.readyState) {
       setTimeout(function () {

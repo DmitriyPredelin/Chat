@@ -1,10 +1,10 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import channelReducer from "./chat-reducers/channel-reducer";
-import friendReducer from "./chat-reducers/friend-reducer";
 import createSagaMiddleware from "redux-saga";
-import { rootSaga} from "../store/sagas";
 import thunk from "redux-thunk";
+import { rootSaga } from "../store/sagas";
+import channelReducer from "./chat-reducers/channel-reducer";
 import chatReducer from "./chat-reducers/chat-reducer";
+import friendReducer from "./chat-reducers/friend-reducer";
 import profileReducer from "./profile-reducers/profile-reducer";
 import seeBattleReducer from "./sea-battle-reducers/sea-battle-reducer";
 

@@ -43,7 +43,7 @@ export const getActiveTabsKey = (state: any) => {
 export const getDriwerFriend = (state: any) => {
   let idDriwerFriend: number = state.friends.drawerFriend;
   if (idDriwerFriend === -1) {
-    return;
+    return undefined;
   }
 
   return state.friends.friends.find(

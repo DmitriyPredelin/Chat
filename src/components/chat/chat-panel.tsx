@@ -1,5 +1,6 @@
 import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { Avatar, List } from 'antd';
+import { wsSend } from "components/general/common";
 import { Message } from "components/general/message";
 import { useContext, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +10,10 @@ import { getMessages } from "../../store/chat-reducers/chat-selectors";
 
 
 export const ChatPanel = (props: any) => {
-    const wsSend = props.wsSend;
     const tabKey: number = props.tabKey;
     const textValueRef = useRef<HTMLTextAreaElement>(null)
     const auth = useContext(AuthContext);
+    const socket = props.socket;
 
     const classNames = require("classnames");
     const data: Array<IMessage> = useSelector(getMessages(tabKey));
@@ -35,7 +36,7 @@ export const ChatPanel = (props: any) => {
             }
             console.log(newMessage);
 
-            wsSend(newMessage);
+            wsSend(socket, newMessage);
             Message('sdf');
             textValueRef.current.value = '';
         }
@@ -49,6 +50,7 @@ export const ChatPanel = (props: any) => {
         }
     }
 
+ 
     return (
         <>
             <div className="chat-panel">
@@ -74,6 +76,7 @@ export const ChatPanel = (props: any) => {
                 </div>
             </div>
             <div className="chat-panel__btn-panel">
+               
                 <PaperClipOutlined className="chat-panel__paper-clip btn-panel__icon" />
                 <textarea rows={1} className="chat-panel__input-field " ref={textValueRef} placeholder="Введите ваше сообщение" onKeyPress={keyPressHandler} />
                 <button className="material-icons-outlined btn-panel__icon_smile btn-panel__icon">sentiment_satisfied</button>
