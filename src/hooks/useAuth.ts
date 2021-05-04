@@ -1,4 +1,3 @@
-import { wsURL } from "API/API";
 import { useState, useCallback, useEffect } from "react";
 import { useHistory } from "react-router";
 import { storageName } from "../common/interface";
@@ -10,22 +9,21 @@ export const useAuth = () => {
   const history = useHistory();
 
   const login = useCallback((jwtToken, id, email) => {
-    
     setToken(jwtToken);
     setUserId(id);
     setEmail(email);
-    
+
     localStorage.setItem(
       storageName,
       JSON.stringify({ userId: id, token: jwtToken })
     );
-   }, []);
+  }, []);
 
   const logout = useCallback(() => {
     setToken(null);
     setUserId(0);
     localStorage.removeItem(storageName);
-    history.push('/auth');
+    history.push("/auth");
   }, []);
 
   useEffect(() => {

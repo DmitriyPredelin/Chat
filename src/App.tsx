@@ -43,13 +43,20 @@ function App() {
       console.log('CONNECT SOC');
 
       const socket: WebSocket = new WebSocket(wsURL);
+      socket.onopen = function(event) {
+        setConnection(userId, socket)
+      };
+        
+
+     // socket.addEventListener("open", () => setConnection(userId, socket))
       dispatch({ type: SET_WEBSOCKET_CONNECT, socket: socket });
 
-      console.log('useEffect auth');
-      socket.addEventListener("open", () => setConnection(userId, socket))
+      //console.log(socket);
+
 
       return () => {
-        socket.removeEventListener("open", () => setConnection(userId, socket), false);
+        socket.close();
+        //socket.removeEventListener("open", () => setConnection(userId, socket), false);
       }
     }
   }, [userId])

@@ -1,4 +1,3 @@
-import { wsURL } from "../../API/API";
 import { IChatTab, IMessage } from "../../common/interface";
 
 export const SET_MESSAGE = "SET_MESSAGE";
