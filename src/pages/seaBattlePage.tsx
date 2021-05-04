@@ -51,12 +51,12 @@ export const SeaBattlePage = () => {
         if (socket !== null) {
             socket.addEventListener("open", setConnection);
             socket.addEventListener("message", sendShot);
-            socket.addEventListener("message", recieveShot);
+            //socket.addEventListener("message", recieveShot);
         }
         return () => {
             socket.removeEventListener("open", setConnection, false);
             socket.addEventListener("message", sendShot);
-            socket.addEventListener("message", recieveShot);
+            //socket.addEventListener("message", recieveShot);
         }
     }, [auth])
 
