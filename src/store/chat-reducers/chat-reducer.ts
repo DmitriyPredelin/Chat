@@ -61,10 +61,8 @@ const chatReducer = (state = defaultStore, action: any) => {
       copyState.tabs.forEach((tab) => {
         tab.active = false;
       });
-      console.log(SET_ACTIVE_TAB);
 
       let tab = copyState.tabs.find((tab: IChatTab) => tab.key === action.key);
-
       if (tab !== undefined) {
         tab.active = true;
         copyState.messages.forEach((message: IMessage) => {

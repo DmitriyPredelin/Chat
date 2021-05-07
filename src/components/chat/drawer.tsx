@@ -1,9 +1,8 @@
-import { Drawer, Button, Dropdown, Menu } from 'antd';
+import { CaretDownOutlined, FacebookOutlined } from '@ant-design/icons';
+import { Button, Drawer, Dropdown, Menu } from 'antd';
 import { useSelector } from 'react-redux';
 import { IUser } from '../../common/interface';
 import { getDriwerFriend } from '../../store/chat-reducers/chat-selectors';
-import { CaretDownOutlined, FacebookOutlined } from '@ant-design/icons';
-import { IUserInfoItem } from "../../common/interface"
 
 
 const menu = (
@@ -19,7 +18,17 @@ const menu = (
     </Menu>
 )
 
-const FriendInfoItem: React.FC<IUserInfoItem> = ({ title, content }) => {
+export type UserInfoItem = {
+    title: string;
+    content: string;
+}
+
+export type DrawerPanelProps = {
+    onCloseProfile: () => void,
+    profileVisible: boolean
+}
+
+const FriendInfoItem: React.FC<UserInfoItem> = ({ title, content }) => {
     return (
         <>
             <div>{title}</div>
@@ -28,9 +37,8 @@ const FriendInfoItem: React.FC<IUserInfoItem> = ({ title, content }) => {
     )
 }
 
-export const DrawerPanel = (props: any) => {
-    const { onCloseProfile, profileVisible } = props;
-    const driwerFriend: IUser = useSelector(getDriwerFriend);
+export const DrawerPanel: React.FC<DrawerPanelProps> = ({ onCloseProfile, profileVisible }) => {
+    const driwerFriend: IUser | undefined = useSelector(getDriwerFriend);
     const sendMessage = () => {
         /*const ws = new WebSocket(wsURL);
         ws.onopen = () => {
@@ -72,7 +80,6 @@ export const DrawerPanel = (props: any) => {
                         <FriendInfoItem title="Skype" content={driwerFriend.skype || "не указан"} />
                     </div>
                 </div>
-
             </div>
         </Drawer>
     )

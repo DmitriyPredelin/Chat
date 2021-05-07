@@ -1,11 +1,13 @@
-import { IChatTab, IMessage, IUser } from "common/interface";
+import { IChannel, IChatTab, IMessage, IUser } from "common/interface";
 
 export const getChannels = (state: any) => {
-  return state.channels.channels;
+  const channels: Array<IChannel> = state.channels.channels;
+  return channels;
 };
 
 export const getFriends = (state: any) => {
-  return state.friends.friends;
+  const friends: Array<IUser> = state.friends.friends;
+  return friends;
 };
 
 export const getFriendsLoading = (state: any) => {
@@ -46,9 +48,10 @@ export const getDriwerFriend = (state: any) => {
     return undefined;
   }
 
-  return state.friends.friends.find(
+  const friend: IUser = state.friends.friends.find(
     (friend: IUser) => friend.id === idDriwerFriend
   );
+  return friend;
 };
 
 export const getMessageFromTab = (id: any) => (state: any) => {

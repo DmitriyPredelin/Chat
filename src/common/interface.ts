@@ -12,6 +12,12 @@ export interface IUser {
   isOnline : boolean;
 }
 
+export interface IChannel {
+  id : number,
+  name : string,
+  active : boolean
+}
+
 export interface IMessage {
   id: number;
   text: string;
@@ -34,11 +40,6 @@ export interface IChatTab {
   key: string;
   name: string;
   active: boolean;
-}
-
-export interface IUserInfoItem {
-  title: string;
-  content: string;
 }
 
 export enum CellType {

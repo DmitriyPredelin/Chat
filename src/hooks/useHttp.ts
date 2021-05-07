@@ -14,7 +14,11 @@ export const useHttp = () => {
           headers["Content-Type"] = "application/json";
         }
 
-        const response = await fetch(serverURL + url, { method, body, headers });
+        const response = await fetch(serverURL + url, {
+          method,
+          body,
+          headers,
+        });
         const data = await response.json();
 
         if (!response.ok) {

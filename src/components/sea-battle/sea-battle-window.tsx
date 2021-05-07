@@ -6,11 +6,11 @@ import { ICell } from "../../common/interface";
 import { SeeBattleCell } from "./see-battle-cell";
 import { Spin } from 'antd';
 
-interface ISeaBattleWindowProps {
+type ISeaBattleWindowProps = {
     affil: number,
     socket: WebSocket
 }
-export const SeaBattleWindow = ({ affil, socket }: ISeaBattleWindowProps) => {
+export const SeaBattleWindow: React.FC<ISeaBattleWindowProps> = ({ affil, socket }) => {
     const dispatch = useDispatch();
     const [down, setDown] = useState(false);
     const [state, setstate] = useState("");

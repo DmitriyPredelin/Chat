@@ -4,8 +4,11 @@ import { ChatPage } from '../../pages/chatPage';
 import { ProfilePage } from "../../pages/profilerPage";
 import { SeaBattlePage } from '../../pages/seaBattlePage';
 
-export const Routing = (props: any) => {
+type RoutingProps = {
+    isAuthentificated: boolean
+}
 
+export const Routing: React.FC<RoutingProps> = ({ isAuthentificated }) => {
     return (<Switch>
         <Route path="/chat">
             <ChatPage />
@@ -20,7 +23,7 @@ export const Routing = (props: any) => {
             <SeaBattlePage />
         </Route>
         <Route exact path="/">
-            {props.isAuthentificated ? <Redirect to="/chat" /> : <Redirect to="/auth" />}
+            {isAuthentificated ? <Redirect to="/chat" /> : <Redirect to="/auth" />}
         </Route>
     </Switch>
     )

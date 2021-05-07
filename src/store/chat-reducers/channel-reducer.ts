@@ -1,3 +1,5 @@
+import { IChannel } from "common/interface";
+
 const SET_ACTIVE_CHANNEL = "SET_ACTIVE_CHANNEL";
 export const SET_CHANNELS = "SET_CHANNELS";
 export const SET_CHANNELS_SAGA = "SET_CHANNELS_SAGA";
@@ -14,7 +16,7 @@ const defaultStore = {
       name: "#friends",
       active: false,
     },
-  ],
+  ] as Array<IChannel>,
 };
 
 const channelReducer = (state = defaultStore, action: any) => {

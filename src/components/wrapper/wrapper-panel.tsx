@@ -1,14 +1,20 @@
 import classNames from "classnames";
+import { IChannel, IUser } from "common/interface";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
+type WrapperPanelProps = {
+    titleText: string,
+    selector: ((state: any) => IChannel[]) | ((state: any) => IUser[]),
+}
 
-export const WrapperPanel = (props: any) => {
+
+export const WrapperPanel: React.FC<WrapperPanelProps> = (props: any) => {
 
     const [expanded, setExpanded] = useState(true);
 
     const { titleText, selector } = props;
-    let panelList: Array<any> = useSelector(selector) ;
+    let panelList: any = useSelector(selector);
 
     const onClickExpander = () => {
         setExpanded((prev) => !prev)

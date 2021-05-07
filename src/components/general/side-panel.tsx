@@ -3,7 +3,11 @@ import { Tooltip } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { SeeBarkIcon } from "../sea-battle/nav-icon";
 
-export const SidePanel = (props: any) => {
+type SidePanelProps = {
+    logout: () => void
+}
+
+export const SidePanel: React.FC<SidePanelProps> = ({ logout }) => {
     return (
         <div className="nav-left">
             <div className="button-panel_main">
@@ -13,12 +17,12 @@ export const SidePanel = (props: any) => {
                     </Tooltip>
                 </NavLink>
                 <NavLink to="/calendar">
-                    <Tooltip placement="left"overlay="Календарь" mouseEnterDelay={0.5}>
+                    <Tooltip placement="left" overlay="Календарь" mouseEnterDelay={0.5}>
                         <CalendarOutlined className="button-panel__icons" />
                     </Tooltip>
                 </NavLink>
                 <NavLink to="/paint">
-                    <Tooltip placement="left"overlay="Рисовать" mouseEnterDelay={0.5}>
+                    <Tooltip placement="left" overlay="Рисовать" mouseEnterDelay={0.5}>
                         <FormatPainterOutlined className="button-panel__icons" />
                     </Tooltip>
                 </NavLink>
@@ -28,12 +32,12 @@ export const SidePanel = (props: any) => {
             </div>
             <div className="button-panel_additional">
                 <NavLink to="/profile">
-                    <Tooltip placement="left"overlay="Профиль" mouseEnterDelay={0.5}>
+                    <Tooltip placement="left" overlay="Профиль" mouseEnterDelay={0.5}>
                         <UserOutlined className="button-panel__icons" />
                     </Tooltip>
                 </NavLink>
-                <Tooltip placement="left"overlay="Выйти из чатика" mouseEnterDelay={0.5}>
-                    <LogoutOutlined className="button-panel__icons" onClick={props.logout} />
+                <Tooltip placement="left" overlay="Выйти из чатика" mouseEnterDelay={0.5}>
+                    <LogoutOutlined className="button-panel__icons" onClick={logout} />
                 </Tooltip>
             </div>
         </div >

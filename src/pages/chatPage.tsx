@@ -17,7 +17,7 @@ export const ChatPage = () => {
     const auth = useContext(AuthContext);
 
     //видимость профиля друга
-    const [profileVisible, setProfileVisible] = useState(false)
+    const [profileVisible, setProfileVisible] = useState<boolean>(false)
 
     useEffect(() => {
         //установка списка каналов в стейт
