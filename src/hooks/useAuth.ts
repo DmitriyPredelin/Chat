@@ -1,12 +1,26 @@
+import { wsURL } from "API/API";
+import { wsSend } from "components/general/common";
 import { useState, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { storageName } from "../common/interface";
+import { SET_WEBSOCKET_CONNECT } from "store/chat-reducers/chat-reducer";
+import { IConnect, storageName } from "../common/interface";
 
 export const useAuth = () => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(0);
   const [email, setEmail] = useState(null);
   const history = useHistory();
+
+  const dispatch = useDispatch();
+  //установка сокет соединения
+  const setConnection = (userId: number, socket: WebSocket | undefined) => {
+    let newConnect: IConnect = {
+      userId: userId,
+      type: "connect",
+    };
+    wsSend(socket, newConnect);
+  };
 
   const login = useCallback((jwtToken, id, email) => {
     setToken(jwtToken);
@@ -29,10 +43,26 @@ export const useAuth = () => {
   useEffect(() => {
     if (localStorage.getItem(storageName) !== null) {
       const data = JSON.parse(localStorage.getItem(storageName) ?? "");
-
       login(data.token, data.userId, data.email);
     }
   }, [login]);
+
+  useEffect(() => {
+    if (userId > 0) {
+      const socket = new WebSocket(wsURL);
+      if (socket) {
+        socket.addEventListener("open", () => setConnection(userId, socket));
+        dispatch({ type: SET_WEBSOCKET_CONNECT, socket: socket });
+        return () => {
+          socket.removeEventListener(
+            "open",
+            () => setConnection(userId, socket),
+            false
+          );
+        };
+      }
+    }
+  }, [userId]);
 
   return { login, logout, token, userId, email };
 };

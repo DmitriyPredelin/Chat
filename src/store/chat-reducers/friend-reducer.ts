@@ -14,7 +14,6 @@ const defaultStore = {
 
 const friendReducer = (state = defaultStore, action: any) => {
   let copyState = { ...state, friends: [...state.friends] };
-
   switch (action.type) {
     case SET_FRIENDS:
       return { ...state, friends: action.friends, loading: false };
@@ -35,11 +34,18 @@ const friendReducer = (state = defaultStore, action: any) => {
       return { ...state, drawerFriend: action.drawerFriendId };
 
     case SET_ONLINE_FRIENDS:
-      copyState.friends.forEach((friend: IUser) => {
-        friend.isOnline = action.friendsIds.includes(friend.id) ? true : false;
-      });
-
+      let friendOnline = copyState.friends.find(
+        (friend: IUser) => friend.id === action.friendId
+      );
+      if (friendOnline !== undefined) {
+        friendOnline.isOnline = true;
+      }
       return copyState;
+    /* copyState.friends.forEach((friend: IUser) => {
+        friend.isOnline = action.friendsIds.includes(friend.id) ? true : false;
+      });*/
+
+    //return copyState;
   }
 
   return { ...state };
@@ -60,9 +66,9 @@ export const setDriwerFriendAC = (drawerFriendId: number) => ({
   drawerFriendId: drawerFriendId,
 });
 
-export const setOnlineFriendAC = (friendsIds: Array<number>) => ({
+export const setOnlineFriendAC = (friendId: number) => ({
   type: SET_ONLINE_FRIENDS,
-  friendsIds: friendsIds,
+  friendId: friendId,
 });
 
 export default friendReducer;

@@ -1,12 +1,7 @@
 import 'antd/dist/antd.css';
-import { wsURL } from 'API/API';
-import { IConnect } from 'common/interface';
-import { wsSend } from 'components/general/common';
 import { Routing } from 'components/general/routing';
 import { SidePanel } from 'components/general/side-panel';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { SET_WEBSOCKET_CONNECT } from 'store/chat-reducers/chat-reducer';
+import React from 'react';
 import { Header } from './components/general/header';
 import { AuthContext } from "./context/AuthContext";
 import { useAuth } from './hooks/useAuth';
@@ -16,52 +11,6 @@ import './styles.scss';
 function App() {
   const { login, logout, token, userId, email } = useAuth();
   const isAuthentificated = !!token;
-
-  const dispatch = useDispatch();
-
-  /*const socket: WebSocket = useSelector(getWebSocketConnection);
-
-  if (!socket) {
-    dispatch({ type: SET_WEBSOCKET_CONNECT });
-  }*/
-
-  //установка сокет соединения
-  const setConnection = (userId: number, socket: WebSocket) => {
-    console.log('setConnection');
-
-    let newConnect: IConnect = {
-      userId: userId,
-      type: 'connect'
-    }
-    wsSend(socket, newConnect);
-  }
-
-  console.log(userId);
-
-  useEffect(() => {
-    if (isAuthentificated && userId !== 0) {
-      console.log('CONNECT SOC');
-
-      const socket: WebSocket = new WebSocket(wsURL);
-      socket.onopen = function(event) {
-        setConnection(userId, socket)
-      };
-        
-
-     // socket.addEventListener("open", () => setConnection(userId, socket))
-      dispatch({ type: SET_WEBSOCKET_CONNECT, socket: socket });
-
-      //console.log(socket);
-
-
-      return () => {
-        socket.close();
-        //socket.removeEventListener("open", () => setConnection(userId, socket), false);
-      }
-    }
-  }, [userId])
-
-
 
   if (!isAuthentificated) {
     return (
@@ -81,9 +30,6 @@ function App() {
     </AuthContext.Provider>
   );
 }
-
-
-
 
 export default App;
 
