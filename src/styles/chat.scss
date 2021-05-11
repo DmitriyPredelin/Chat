@@ -99,20 +99,40 @@
         height: 40px;
         border-style: none;
 
+        .friend__online-status,
+        .friend__offline-status {
+            transform: translateX(-100%) translateY(250%);
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            margin-right: 7px;
+            position : absolute;
+        }
+
+        /*.ant-list-item-meta {
+            position: relative;
+
+            &::after {
+                content: "";
+                transform: translateY(150%) translateX(200%) ;
+                border-radius: 50%;
+                width: 15px;
+                height: 15px;
+                position : absolute;
+                background-color: #70cc16;
+            }
+        }*/
+
+        .badge {
+            transform: translateX(-100%) ;//translateY(250%);
+        }
+
         .friend__online-status {
             background-color: #70cc16;
-            border-radius: 50%;
-            width: 7px;
-            height: 7px;
-            margin-right: 7px;
         }
 
         .friend__offline-status {
             background-color: lightgray;
-            border-radius: 50%;
-            width: 7px;
-            height: 7px;
-            margin-right: 7px;
         }
 
         .friend__name {
@@ -140,16 +160,13 @@
         flex-direction: column;
         justify-content: space-between;
         height: 93%;
- 
+
         .chat-panel__field {
             max-height: 100%;
             .chat-message {
                 margin: 0 25px;
             }
         }
-
-        
-
     }
 
     .chat-panel__btn-panel {
@@ -160,12 +177,12 @@
         border: 1px solid black;
 
         .btn-panel__icon {
-            color : $BACKGROUND_LIGHT;
+            color: $BACKGROUND_LIGHT;
             font-size: 25px;
             margin: 0 15px;
             cursor: pointer;
             &:hover {
-                color : black;
+                color: black;
             }
         }
 
@@ -177,7 +194,7 @@
 
             &:focus {
                 border-style: none;
-                outline: none ;
+                outline: none;
                 box-shadow: none;
             }
             &:active {
@@ -185,7 +202,7 @@
                 box-shadow: none;
             }
         }
-        
+
         .btn-panel__icon_smile {
             border-style: none;
             background-color: #fff;
@@ -216,16 +233,15 @@
         }
     }
 
-    .ant-list-item.main  {
+    .ant-list-item.main {
         background-color: #e3f2fd;
     }
 
-    .ant-list-item.other  {
+    .ant-list-item.other {
         background-color: #ffebee;
     }
 
     //#ffebee
     //background-color: #e3f2fd;
     //background-color: #ffebee;
-
 }

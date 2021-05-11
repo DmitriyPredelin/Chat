@@ -1,15 +1,15 @@
 import { UnlockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Input } from 'antd';
+import { useAuthProvider } from 'context/AuthContext';
 import React, { useContext, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router';
 import { Message } from '../components/general/message';
-import { AuthContext } from "../context/AuthContext";
 import { useHttp } from "../hooks/useHttp";
 
 
 const AuthPage = () => {
-    const auth = useContext(AuthContext);
+    const auth = useAuthProvider();
     const history = useHistory();
 
     const { loading, request } = useHttp();
@@ -34,7 +34,7 @@ const AuthPage = () => {
                 Message({ text: 'Логин и/или пароль пустой' });
                 return;
             }
-            if (!auth.isAuthentificated) {
+            if (!auth.isAuth) {
                 const data = await request(`/login`, 'POST', { ...form });
                 auth.login(data.token, data.userId, data.email);
                 history.push('/chat');

@@ -1,10 +1,10 @@
 import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { Avatar, List } from 'antd';
 import { wsSend } from "components/general/common";
+import { useAuthProvider } from "context/AuthContext";
 import { useCallback, useContext, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { IMessage } from '../../common/interface';
-import { AuthContext } from '../../context/AuthContext';
 import { getMessages } from "../../store/chat-reducers/chat-selectors";
 
 type ChatPanelProps = {
@@ -15,7 +15,7 @@ type ChatPanelProps = {
 export const ChatPanel: React.FC<ChatPanelProps> = ({ tabKey, socket }) => {
 
     const textValueRef = useRef<HTMLTextAreaElement>(null)
-    const auth = useContext(AuthContext);
+    const auth = useAuthProvider();
 
     const classNames = require("classnames");
     const data: Array<IMessage> = useSelector(getMessages(tabKey));

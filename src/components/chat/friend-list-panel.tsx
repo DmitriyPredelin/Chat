@@ -7,10 +7,10 @@ import { getFriendsLoading, getUndeliveredMessage } from "../../store/chat-reduc
 import { setActiveFriendAC, setDriwerFriendAC } from "../../store/chat-reducers/friend-reducer";
 
 type FriendListPanelProps = {
-    friends : [],
-    setProfileVisible : React.Dispatch<React.SetStateAction<boolean>>,
-    expanded : boolean,
-    expandedStyles : string
+    friends: [],
+    setProfileVisible: React.Dispatch<React.SetStateAction<boolean>>,
+    expanded: boolean,
+    expandedStyles: string
 }
 
 
@@ -74,11 +74,11 @@ export const FriendListPanel = (props: any) => {
                 return (
 
                     <List.Item className="friend" key={friend.id} onClick={() => setActiveFriend(friend.id, friend.name)}>
-                        <div className={friendOnlineStatus}></div>
                         <List.Item.Meta
                             avatar={
-                                <Badge count={record.count} size="small" showZero={false}>
+                                <Badge count={record.count} size="small" showZero={false} >
                                     <Avatar src={friend.src} className="friend__avatar" size={48} />
+                                    <span className={friendOnlineStatus}></span>
                                 </Badge>
                             }
                             title={friend.name}
@@ -91,3 +91,5 @@ export const FriendListPanel = (props: any) => {
         </div>
     )
 }
+
+/*<div className={friendOnlineStatus}></div>*/

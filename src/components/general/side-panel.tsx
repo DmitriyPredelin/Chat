@@ -1,13 +1,13 @@
 import { CalendarOutlined, FormatPainterOutlined, LogoutOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
+import { useAuthProvider } from 'context/AuthContext';
 import { NavLink } from 'react-router-dom';
 import { SeeBarkIcon } from "../sea-battle/nav-icon";
 
-type SidePanelProps = {
-    logout: () => void
-}
 
-export const SidePanel: React.FC<SidePanelProps> = ({ logout }) => {
+export const SidePanel: React.FC = () => {
+
+    const {logout} = useAuthProvider();
     return (
         <div className="nav-left">
             <div className="button-panel_main">
