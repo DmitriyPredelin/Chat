@@ -88,8 +88,8 @@
     }
 
     .friend {
-        margin-top: 10px;
-        margin-bottom: 15px;
+        margin-top: 15px;
+        margin-bottom: 20px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -98,6 +98,20 @@
         padding: 0px 5px;
         height: 40px;
         border-style: none;
+
+
+        .friend__avatar-border {
+            overflow : hidden;
+            border-radius: 50px;
+            height: 60px;
+            width: 60px;
+            margin-right: 10px;
+
+            .friend__avatar {
+                object-fit: scale-down;
+                width: 60px;
+            }
+        }
 
         .friend__online-status,
         .friend__offline-status {
@@ -123,10 +137,7 @@
             }
         }*/
 
-        .badge {
-            transform: translateX(-100%) ;//translateY(250%);
-        }
-
+        
         .friend__online-status {
             background-color: #70cc16;
         }
@@ -137,6 +148,7 @@
 
         .friend__name {
             font-size: 14px;
+            margin-left: -30px;
             color: yellowgreen;
         }
 

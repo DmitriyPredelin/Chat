@@ -1,26 +1,17 @@
-import { CaretRightOutlined } from "@ant-design/icons";
-import { Avatar, Badge, List, Spin } from 'antd';
+import { Spin } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { IUser } from "../../common/interface";
 import { addTabAC, setActiveChatAC, setActiveTabAC } from "../../store/chat-reducers/chat-reducer";
 import { getFriendsLoading, getUndeliveredMessage } from "../../store/chat-reducers/chat-selectors";
 import { setActiveFriendAC, setDriwerFriendAC } from "../../store/chat-reducers/friend-reducer";
-
-type FriendListPanelProps = {
-    friends: [],
-    setProfileVisible: React.Dispatch<React.SetStateAction<boolean>>,
-    expanded: boolean,
-    expandedStyles: string
-}
-
+import { FriendItem } from "./friend-item";
 
 export const FriendListPanel = (props: any) => {
 
     const friends = props.panelList;
     const setProfileVisible = props.setProfileVisible;
     const loading = useSelector(getFriendsLoading);
-    const classNames = require("classnames");
-
+ 
     const dispatch = useDispatch();
     const setActiveFriend = (friendId: number, friendName: string) => {
         //установим активного друга
@@ -65,26 +56,8 @@ export const FriendListPanel = (props: any) => {
                         count: 0
                     }
                 }
-
-                let friendOnlineStatus: string = classNames(
-                    { "friend__online-status": friend.isOnline },
-                    { "friend__offline-status": !friend.isOnline }
-                );
-
                 return (
-
-                    <List.Item className="friend" key={friend.id} onClick={() => setActiveFriend(friend.id, friend.name)}>
-                        <List.Item.Meta
-                            avatar={
-                                <Badge count={record.count} size="small" showZero={false} >
-                                    <Avatar src={friend.src} className="friend__avatar" size={48} />
-                                    <span className={friendOnlineStatus}></span>
-                                </Badge>
-                            }
-                            title={friend.name}
-                        />
-                        <CaretRightOutlined style={{ marginRight: '0px' }} onClick={() => showDriwer(friend.id)} />
-                    </List.Item>
+                    <FriendItem friend={friend} count={record.count} showDriwer={showDriwer} setActiveFriend={setActiveFriend} expanded={props.expanded}/>
                 )
             })}
 
@@ -92,4 +65,20 @@ export const FriendListPanel = (props: any) => {
     )
 }
 
+ /*<Badge backGround={"#52c41a"} position={"rightBot"}/>*/
 /*<div className={friendOnlineStatus}></div>*/
+
+
+/* <List.Item className="friend" key={friend.id} onClick={() => setActiveFriend(friend.id, friend.name)}>
+                        <List.Item.Meta
+                            avatar={
+                                <>
+                                    <Avatar src={friend.src} className="friend__avatar" size={48} />
+                                    <Badge backGround={"#FF4D4F"} position={"rightTop"} value={record.count.toString()}/>
+                                   
+                                </>
+                            }
+                            title={friend.name}
+                        />
+                        <CaretRightOutlined style={{ marginRight: '0px' }} onClick={() => showDriwer(friend.id)} />
+                    </List.Item>*/

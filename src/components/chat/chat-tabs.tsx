@@ -42,9 +42,9 @@ export const ChatTabs = () => {
                 dispatch(addMessageAC(newMessage));
                 break;
 
-            case "online_friend":
-                //console.log(JSON.parse(e.data));
-                dispatch(setOnlineFriendAC(JSON.parse(e.data).userId));
+            case "status":
+                console.log(JSON.parse(e.data));
+                dispatch(setOnlineFriendAC(JSON.parse(e.data).userId, JSON.parse(e.data).position));
         }
     }
 
@@ -57,7 +57,7 @@ export const ChatTabs = () => {
             /*timer.current = setInterval(() => {
                 let newMessage = {
                     id: auth.userId,
-                    type: "online_friend"
+                    type: "status"
                 }
                 console.log(newMessage);
                 wsSend(socket, newMessage);

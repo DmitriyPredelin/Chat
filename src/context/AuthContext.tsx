@@ -5,6 +5,7 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SET_WEBSOCKET_CONNECT } from "store/chat-reducers/chat-reducer";
+import { setOnlineFriendAC } from "store/chat-reducers/friend-reducer";
 
 function emptyFunction(t: any, id: any, email: any) { };
 function emptyFunction2() { };
@@ -39,6 +40,13 @@ export const AuthProvider: React.FC<IChildrenProps> = ({ children }) => {
     wsSend(socket, newConnect);
   };
 
+
+  const getOnlineFriend = (e : any) => {
+    console.log(JSON.parse(e.data));
+    
+    dispatch(setOnlineFriendAC(JSON.parse(e.data).userId, JSON.parse(e.data).position));
+  }
+
   const login = useCallback((jwtToken, id, email) => {
     setToken(jwtToken);
     setUserId(id);
@@ -69,6 +77,7 @@ export const AuthProvider: React.FC<IChildrenProps> = ({ children }) => {
       const socket = new WebSocket(wsURL);
       if (socket) {
         socket.addEventListener("open", () => setConnection(userId, socket));
+        //socket.addEventListener("message", getOnlineFriend);
         dispatch({ type: SET_WEBSOCKET_CONNECT, socket: socket });
         return () => {
           socket.removeEventListener(
