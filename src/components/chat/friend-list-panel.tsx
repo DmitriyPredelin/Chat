@@ -11,7 +11,7 @@ export const FriendListPanel = (props: any) => {
     const friends = props.panelList;
     const setProfileVisible = props.setProfileVisible;
     const loading = useSelector(getFriendsLoading);
- 
+
     const dispatch = useDispatch();
     const setActiveFriend = (friendId: number, friendName: string) => {
         //установим активного друга
@@ -57,7 +57,12 @@ export const FriendListPanel = (props: any) => {
                     }
                 }
                 return (
-                    <FriendItem friend={friend} count={record.count} showDriwer={showDriwer} setActiveFriend={setActiveFriend} expanded={props.expanded}/>
+                    <FriendItem key={friend.id}
+                        friend={friend}
+                        count={record.count}
+                        showDriwer={showDriwer}
+                        setActiveFriend={setActiveFriend}
+                        expanded={props.expanded} />
                 )
             })}
 
@@ -65,7 +70,7 @@ export const FriendListPanel = (props: any) => {
     )
 }
 
- /*<Badge backGround={"#52c41a"} position={"rightBot"}/>*/
+/*<Badge backGround={"#52c41a"} position={"rightBot"}/>*/
 /*<div className={friendOnlineStatus}></div>*/
 
 
@@ -75,7 +80,7 @@ export const FriendListPanel = (props: any) => {
                                 <>
                                     <Avatar src={friend.src} className="friend__avatar" size={48} />
                                     <Badge backGround={"#FF4D4F"} position={"rightTop"} value={record.count.toString()}/>
-                                   
+
                                 </>
                             }
                             title={friend.name}

@@ -40,10 +40,7 @@ const FriendInfoItem: React.FC<UserInfoItem> = ({ title, content }) => {
 export const DrawerPanel: React.FC<DrawerPanelProps> = ({ onCloseProfile, profileVisible }) => {
     const driwerFriend: IUser | undefined = useSelector(getDriwerFriend);
     const sendMessage = () => {
-        /*const ws = new WebSocket(wsURL);
-        ws.onopen = () => {
-            console.log("Подключение установлено");
-        }*/
+
     }
 
     if (!driwerFriend) {

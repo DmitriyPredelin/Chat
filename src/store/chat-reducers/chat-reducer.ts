@@ -1,7 +1,6 @@
 import { IChatTab, IMessage } from "../../common/interface";
 
 export const SET_MESSAGE = "SET_MESSAGE";
-export const SET_WEBSOCKET_CONNECT = "SET_WEBSOCKET_CONNECT";
 export const SET_ACTIVE_CHAT = "SET_ACTIVE_CHAT";
 export const ADD_TAB = "ADD_TAB";
 export const REMOVE_TAB = "REMOVE_TAB";
@@ -24,8 +23,6 @@ const chatReducer = (state = defaultStore, action: any) => {
   };
 
   switch (action.type) {
-    case SET_WEBSOCKET_CONNECT:
-      return { ...state, socket: action.socket };
 
     case SET_ACTIVE_CHAT:
       return { ...state, activeChat: true };
@@ -92,11 +89,6 @@ const chatReducer = (state = defaultStore, action: any) => {
 
   return { ...state };
 };
-
-export const setWebsocketConnectAC = (socket: WebSocket) => ({
-  type: SET_WEBSOCKET_CONNECT,
-  socket: socket,
-});
 
 export const setActiveChatAC = () => ({
   type: SET_ACTIVE_CHAT,

@@ -7,7 +7,6 @@ import AuthPage from "./pages/authPage";
 import './styles.scss';
 
 function App() {
-
   const { isAuth } = useAuthProvider();
 
   return (
@@ -22,7 +21,6 @@ function App() {
         </>
       }
     </>
-
   );
 }
 

@@ -2,7 +2,7 @@ import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { Avatar, List } from 'antd';
 import { wsSend } from "components/general/common";
 import { useAuthProvider } from "context/AuthContext";
-import { useCallback, useContext, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { IMessage } from '../../common/interface';
 import { getMessages } from "../../store/chat-reducers/chat-selectors";

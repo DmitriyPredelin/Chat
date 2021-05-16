@@ -7,10 +7,9 @@ import { SeeBattleCell } from "./see-battle-cell";
 import { Spin } from 'antd';
 
 type ISeaBattleWindowProps = {
-    affil: number,
-    socket: WebSocket
+    affil: number
 }
-export const SeaBattleWindow: React.FC<ISeaBattleWindowProps> = ({ affil, socket }) => {
+export const SeaBattleWindow: React.FC<ISeaBattleWindowProps> = ({ affil }) => {
     const dispatch = useDispatch();
     const [down, setDown] = useState(false);
     const [state, setstate] = useState("");
@@ -42,7 +41,6 @@ export const SeaBattleWindow: React.FC<ISeaBattleWindowProps> = ({ affil, socket
                             down={down}
                             affil={affil}
                             setstate={setstate}
-                            socket={socket}
                             shotCells={shotCells} />
                     })
                 })}

@@ -1,17 +1,18 @@
 import { Tabs } from 'antd';
+import { useWebSocket } from 'context/WebsocketContext';
 import { Dispatch, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOnlineFriendAC } from 'store/chat-reducers/friend-reducer';
 import { IChatTab, IMessage } from '../../common/interface';
 import { addMessageAC, removeTabAC, setActiveTabAC } from '../../store/chat-reducers/chat-reducer';
-import { getActiveTabsKey, getChatTabs, getWebSocketConnection } from "../../store/chat-reducers/chat-selectors";
+import { getActiveTabsKey, getChatTabs } from "../../store/chat-reducers/chat-selectors";
 import { ChatPanel } from "./chat-panel";
 
 export const ChatTabs = () => {
 
     //сокет соединение
     const dispatch: Dispatch<{}> = useDispatch();
-    const socket: WebSocket = useSelector(getWebSocketConnection);
+    const socket = useWebSocket();
 
     //ключ активного таба
     const activeTabKey: string | undefined = useSelector(getActiveTabsKey);

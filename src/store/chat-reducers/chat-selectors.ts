@@ -18,10 +18,6 @@ export const getActiveFriend = (state: any) => {
   return state.friends.friends.find((friend: IUser) => friend.active);
 };
 
-export const getWebSocketConnection = (state: any) => {
-  return state.chat.socket;
-};
-
 export const getChatTabs = (state: any) => {
   return state.chat.tabs;
 };

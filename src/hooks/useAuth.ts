@@ -1,9 +1,7 @@
 import { wsURL } from "API/API";
 import { wsSend } from "components/general/common";
 import { useState, useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { SET_WEBSOCKET_CONNECT } from "store/chat-reducers/chat-reducer";
 import { IConnect, storageName } from "../common/interface";
 
 export const useAuth = () => {
@@ -12,7 +10,6 @@ export const useAuth = () => {
   const [email, setEmail] = useState(null);
   const history = useHistory();
 
-  const dispatch = useDispatch();
   //установка сокет соединения
   const setConnection = (userId: number, socket: WebSocket | undefined) => {
     let newConnect: IConnect = {
@@ -52,7 +49,6 @@ export const useAuth = () => {
       const socket = new WebSocket(wsURL);
       if (socket) {
         socket.addEventListener("open", () => setConnection(userId, socket));
-        dispatch({ type: SET_WEBSOCKET_CONNECT, socket: socket });
         return () => {
           socket.removeEventListener(
             "open",

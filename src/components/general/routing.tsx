@@ -1,4 +1,5 @@
 import { useAuthProvider } from 'context/AuthContext';
+import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { CalendarPage } from '../../pages/calendarPage';
 import { ChatPage } from '../../pages/chatPage';
@@ -8,6 +9,8 @@ import { SeaBattlePage } from '../../pages/seaBattlePage';
 
 export const Routing: React.FC = () => {
     const { isAuth } = useAuthProvider();
+
+    const MemoSeaBattlePage : React.FC = React.memo(SeaBattlePage);
 
     return (<Switch>
         <Route path="/chat">
@@ -20,7 +23,7 @@ export const Routing: React.FC = () => {
             <CalendarPage />
         </Route>
         <Route path="/sea_battle">
-            <SeaBattlePage />
+            <MemoSeaBattlePage />
         </Route>
         <Route exact path="/">
             {isAuth ? <Redirect to="/chat" /> : <Redirect to="/auth" />}

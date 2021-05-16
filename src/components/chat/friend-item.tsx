@@ -17,7 +17,7 @@ export const FriendItem: React.FC<FriendItemProps> = (props) => {
     return (
         <div key={friend.id} className="friend" onClick={() => setActiveFriend(friend.id, friend.name)}>
             <div className="friend__avatar-border">
-                <img className="friend__avatar" src={friend.src} />
+                <img className="friend__avatar" src={friend.src} alt=""/>
             </div>
             <Badge backGround={"#FF4D4F"} position={"rightTop"} value={count.toString()} hidden={!expanded} />
             {friend.isOnline ?

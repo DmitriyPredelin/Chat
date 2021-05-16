@@ -1,11 +1,10 @@
-import { wsURL } from "API/API";
 import { IConnect, storageName } from "common/interface";
 import { wsSend } from "components/general/common";
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { SET_WEBSOCKET_CONNECT } from "store/chat-reducers/chat-reducer";
-import { setOnlineFriendAC } from "store/chat-reducers/friend-reducer";
+import { SET_FRIENDS_SAGA } from "store/chat-reducers/friend-reducer";
+import { useWebSocket } from "./WebsocketContext";
 
 function emptyFunction(t: any, id: any, email: any) { };
 function emptyFunction2() { };
@@ -29,23 +28,18 @@ export const AuthProvider: React.FC<IChildrenProps> = ({ children }) => {
   const [userId, setUserId] = useState(0);
   const [email, setEmail] = useState(null);
   const history = useHistory();
+  const socket = useWebSocket();
 
   const dispatch = useDispatch();
   //установка сокет соединения
-  const setConnection = (userId: number, socket: WebSocket | undefined) => {
+  const setConnection = useCallback((userId: number, socket: WebSocket | undefined) => {
     let newConnect: IConnect = {
       userId: userId,
       type: "connect",
     };
     wsSend(socket, newConnect);
-  };
+  }, [userId]);
 
-
-  const getOnlineFriend = (e : any) => {
-    console.log(JSON.parse(e.data));
-    
-    dispatch(setOnlineFriendAC(JSON.parse(e.data).userId, JSON.parse(e.data).position));
-  }
 
   const login = useCallback((jwtToken, id, email) => {
     setToken(jwtToken);
@@ -56,6 +50,8 @@ export const AuthProvider: React.FC<IChildrenProps> = ({ children }) => {
       storageName,
       JSON.stringify({ userId: id, token: jwtToken })
     );
+
+
   }, []);
 
   const logout = useCallback(() => {
@@ -74,11 +70,13 @@ export const AuthProvider: React.FC<IChildrenProps> = ({ children }) => {
 
   useEffect(() => {
     if (userId > 0) {
-      const socket = new WebSocket(wsURL);
+      
       if (socket) {
+
+        //до установки соединения необходимо получить список друзей, для оповещения о том, чтопользователь стал онлайн
+        dispatch({ type: SET_FRIENDS_SAGA, profileId: userId });
         socket.addEventListener("open", () => setConnection(userId, socket));
-        //socket.addEventListener("message", getOnlineFriend);
-        dispatch({ type: SET_WEBSOCKET_CONNECT, socket: socket });
+
         return () => {
           socket.removeEventListener(
             "open",

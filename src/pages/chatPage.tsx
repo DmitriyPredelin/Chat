@@ -1,5 +1,5 @@
 import { useAuthProvider } from 'context/AuthContext';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ChannelPanel } from "../components/chat/channel-panel";
 import { ChatTabs } from '../components/chat/chat-tabs';
