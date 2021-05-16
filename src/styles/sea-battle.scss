@@ -30,7 +30,7 @@ $SEE_BATLE_TABLE_SIZE: 500px;
                 background-color: black;
             }
 
-            &.non-clicked {
+            &.empty {
                 background-color: white;
                 &:hover {
                     background-color: rgba(111, 130, 138, 0.5);
