@@ -4,7 +4,6 @@ $SEE_BATLE_TABLE_SIZE: 500px;
     @include flexible_between();
     flex: 1 1 400px;
 }
-
 .sea-battle__window {
     border: 1px solid $BACKGROUND_LIGHT;
     flex: 1 1 0px;

@@ -20,7 +20,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ tabKey, socket }) => {
     const classNames = require("classnames");
     const data: Array<IMessage> = useSelector(getMessages(tabKey));
 
-    const send = useCallback(() => {
+    const sendMessage = useCallback(() => {
         if (textValueRef && textValueRef.current && textValueRef.current.value) {
             let sendText: string = textValueRef.current.value;
 
@@ -44,11 +44,10 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ tabKey, socket }) => {
     const keyPressHandler = (e: any) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            send();
+            sendMessage();
             return false;
         }
     }
-
 
     return (
         <>
@@ -66,7 +65,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ tabKey, socket }) => {
                                 <List.Item.Meta
                                     className="chat-message"
                                     avatar={<Avatar size="large" src={message.author_src} />}
-                                    title={<a href="https://ant.design">{message.fromName}<span></span></a>}
+                                    title={<a href="https://ant.design">{message.fromName}</a>}
                                     description={message.text}
                                 />
                             </List.Item>
@@ -78,7 +77,7 @@ export const ChatPanel: React.FC<ChatPanelProps> = ({ tabKey, socket }) => {
                 <PaperClipOutlined className="chat-panel__paper-clip btn-panel__icon" />
                 <textarea rows={1} className="chat-panel__input-field " ref={textValueRef} placeholder="Введите ваше сообщение" onKeyPress={keyPressHandler} />
                 <button className="material-icons-outlined btn-panel__icon_smile btn-panel__icon">sentiment_satisfied</button>
-                <SendOutlined className="chat-panel__send-btn btn-panel__icon" onClick={send} />
+                <SendOutlined className="chat-panel__send-btn btn-panel__icon" onClick={sendMessage} />
             </div>
         </>
     )

@@ -4,7 +4,7 @@ import { IUser } from '../common/interface';
 import { getProfile } from '../store/profile-reducers/profile-selectors';
 
 export const ProfilePage = () => {
-    const profile: IUser = useSelector(getProfile);
+    const profile: IUser = useSelector(getProfile, (current: IUser, prev: IUser) => prev === current);
 
     return (
         <div className="profile">
@@ -12,8 +12,7 @@ export const ProfilePage = () => {
                 <div className="profile-content__photo-panel">
                     <img src={profile.src} alt=""
                         className="profile-content__img" />
-                    <Button danger
-                        className="profile-content__btn"
+                    <Button className="profile-content__btn"
                         type="primary">Изменить фото</Button>
                 </div>
                 <div className="profile-info">
@@ -26,7 +25,6 @@ export const ProfilePage = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

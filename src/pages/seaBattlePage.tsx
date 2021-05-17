@@ -1,4 +1,3 @@
-import { useAuthProvider } from "context/AuthContext";
 import { useWebSocket } from "context/WebsocketContext";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +9,7 @@ export const SeaBattlePage = () => {
 
     const socket = useWebSocket();
     const dispatch = useDispatch();
-
+    
     const isInit = useSelector(getMatrixInit);
 
     useEffect(() => {
@@ -22,14 +21,11 @@ export const SeaBattlePage = () => {
 
     }, [socket])
 
-
-
     const sendShot = useCallback((e: any) => {
         if (JSON.parse(e.data).type !== "status") {
             dispatch(sendShotAC(JSON.parse(e.data)));
         }
-
-    }, [dispatch])
+    }, [])
 
     //подписки сокета
     useEffect(() => {

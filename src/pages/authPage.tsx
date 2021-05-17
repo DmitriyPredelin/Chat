@@ -7,7 +7,6 @@ import { useHistory } from 'react-router';
 import { Message } from '../components/general/message';
 import { useHttp } from "../hooks/useHttp";
 
-
 const AuthPage = () => {
     const auth = useAuthProvider();
     const history = useHistory();
@@ -68,7 +67,8 @@ const AuthPage = () => {
                         id="email"
                         name="email"
                         type="email"
-                        defaultValue="" ref={register}
+                        defaultValue="" 
+                        //ref={register}
                         onChange={changeHandler}
                         onKeyPress={keyPressHandler}
                     />
@@ -80,7 +80,8 @@ const AuthPage = () => {
                         name="password"
                         type="password"
                         onKeyPress={keyPressHandler}
-                        defaultValue="" ref={register}
+                        defaultValue="" 
+                       
                         onChange={changeHandler}
                     />
                     <Button disabled={loading}
