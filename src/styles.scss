@@ -18,12 +18,11 @@ $CONTAINER_HEIGHT: 900px;
 .header {
     @include flexible_between();
     height: 40px;
-    width: $CONTAINER_WIDTH;
+    
+    min-width: 580px;
     max-width: $CONTAINER_WIDTH;
-    max-height: 40px;
-    margin: 0 auto;
+    margin: auto;
     margin-top: 3px;
-
     background-color: white;
     font-family: "Architects Daughter";
     border: 1px solid black;
@@ -38,18 +37,47 @@ $CONTAINER_HEIGHT: 900px;
     }
 }
 
+
+@media screen and (max-width : $CONTAINER_WIDTH) {
+    .header {
+        
+        max-width: $CONTAINER_WIDTH;
+    }
+}
+
+@media screen and (max-width : 1420px) {
+    .header {
+        width: 100%;
+        max-width: $CONTAINER_WIDTH/2;
+    }
+}
+
 .container {
     height: $CONTAINER_HEIGHT;
     width: $CONTAINER_WIDTH;
-    border-radius: 5px;
     max-width: $CONTAINER_WIDTH;
     max-height: $CONTAINER_HEIGHT;
+    min-width: 580px;
     margin: auto;
     position: relative;
     background-color: #ffffff;
     display: flex;
     font-family: 'Nunito', sans-serif;
 }
+
+@media screen and (max-width : 1420px) {
+    .container {
+        height: 2*$CONTAINER_HEIGHT;
+        max-height: 2*$CONTAINER_HEIGHT;
+
+        width: 100%;
+        max-width: $CONTAINER_WIDTH/2;
+    }
+}
+
+
+
+
 
 //=======СТРАНИЦА ПРОФИЛЯ ДРУГА=========
 .friend-profile {

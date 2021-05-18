@@ -4,15 +4,45 @@ $SEE_BATLE_TABLE_SIZE: 500px;
     @include flexible_between();
     flex: 1 1 400px;
 }
+
+@media screen and (max-width : 1420px) {
+    .sea-battle_main {
+        flex-direction: column;
+        width: 100%;
+        max-width: $CONTAINER_WIDTH/2;
+    }
+}
+
+@media screen and (max-width : 640px) {
+    .sea-battle__marine {
+        width: 430px;
+        max-width: 430px;
+        height: 430px;
+        max-height: 430px;
+    }
+}
+
+@media screen and (min-width : 640px) {
+    .sea-battle__marine {
+        height: 100%;
+    }
+}
+
+
+
+
 .sea-battle__window {
     border: 1px solid $BACKGROUND_LIGHT;
     flex: 1 1 0px;
     height: 100%;
+    width: 100%;
     padding: 30px;
 
     .sea-battle__marine {
         border: 1px solid #6f828a;
-        height: $SEE_BATLE_TABLE_SIZE;
+        
+       
+        max-height: $SEE_BATLE_TABLE_SIZE;
         width: $SEE_BATLE_TABLE_SIZE;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
         display: flex;
@@ -22,6 +52,8 @@ $SEE_BATLE_TABLE_SIZE: 500px;
         .sea-battle__cell {
             border: 1px solid #6f828a;
             width: 10%;
+            height: 10%;
+            
             box-sizing: border-box;
             cursor: pointer;
 

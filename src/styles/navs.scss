@@ -3,6 +3,7 @@
     background: $BACKGROUND_DARK;
     mix-blend-mode: normal;
     width: 5%;
+    min-width: 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
