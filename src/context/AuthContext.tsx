@@ -70,10 +70,8 @@ export const AuthProvider: React.FC<IChildrenProps> = ({ children }) => {
 
   useEffect(() => {
     if (userId > 0) {
-      
       if (socket) {
-
-        //до установки соединения необходимо получить список друзей, для оповещения о том, чтопользователь стал онлайн
+        //до установки соединения необходимо получить список друзей, для оповещения о том, что пользователь стал онлайн
         dispatch({ type: SET_FRIENDS_SAGA, profileId: userId });
         socket.addEventListener("open", () => setConnection(userId, socket));
 

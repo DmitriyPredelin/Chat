@@ -18,7 +18,6 @@ export const SeaBattlePage = () => {
             dispatch(initMatrixAC(1));
             dispatch(initMatrixAC(2));
         }
-
     }, [socket])
 
     const sendShot = useCallback((e: any) => {

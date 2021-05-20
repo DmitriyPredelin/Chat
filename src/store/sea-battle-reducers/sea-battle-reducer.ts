@@ -1,4 +1,9 @@
 import { CellType, ICell, IShot } from "../../common/interface";
+import {
+  defaultMatrix,
+  getSearchCell,
+  getSearchCellForId,
+} from "./sea-battle-helper";
 
 export const INIT_MATRIX = "INIT_MATRIX";
 export const SET_CELL_CLICK = "SET_CELL_CLICK";
@@ -6,68 +11,6 @@ export const SET_CELL_DBL_CLICK = "SET_CELL_DBL_CLICK";
 export const RESET_MATRIX = "RESET_MATRIX";
 export const MATRIX_SIZE = 10;
 export const SEND_SHOT = "SEND_SHOT";
-
-function defaultMatrix(size: any, defaultValue = 0) {
-  return Array(size)
-    .fill(0)
-    .map(() => {
-      return Array(size).fill(defaultValue);
-    });
-}
-
-function getSearchCell(newMatrix: ICell[][], searchCell: ICell) {
-  let cell: ICell = {
-    id: "",
-    row: 0,
-    col: 0,
-    affil: 0,
-    type: CellType.empty,
-  };
-
-  let clickedRow = 0;
-  let clickedCol = 0;
-  for (let i = 0; i < MATRIX_SIZE; i++) {
-    for (let j = 0; j < MATRIX_SIZE; j++) {
-      if (
-        newMatrix[i][j].id === searchCell.id &&
-        newMatrix[i][j].affil === searchCell.affil
-      ) {
-        cell = newMatrix[i][j];
-        clickedRow = i;
-        clickedCol = j;
-
-        break;
-      }
-    }
-  }
-
-  return { cell, clickedRow, clickedCol };
-}
-
-function getSearchCellForId(newMatrix: ICell[][], cellId: string) {
-  let cell: ICell = {
-    id: "",
-    row: 0,
-    col: 0,
-    affil: 0,
-    type: CellType.empty,
-  };
-
-  let shootingRow = 0;
-  let shootingCol = 0;
-  for (let i = 0; i < MATRIX_SIZE; i++) {
-    for (let j = 0; j < MATRIX_SIZE; j++) {
-      if (newMatrix[i][j].id === cellId) {
-        cell = newMatrix[i][j];
-        shootingRow = i;
-        shootingCol = j;
-        break;
-      }
-    }
-  }
-
-  return { shotCell: cell, shootingRow, shootingCol };
-}
 
 const defaultStore = {
   myMatrix: defaultMatrix(MATRIX_SIZE),
@@ -105,15 +48,39 @@ const seaBattleReducer = (state = defaultStore, action: any) => {
         newMatrix,
         action.cell
       );
-      if (cell.id !== "") {
-        switch (action.cell.type) {
-          case CellType.empty:
+      if (action.cell.affil === 1) {
+        if (cell.id !== "") {
+          if ( action.cell.type === CellType.empty || (action.cell.type === CellType.near && action.down) ) {
             cell.type = CellType.ship;
-            break;
+            for (let i = clickedRow - 1; i <= clickedRow + 1; i++) {
+              for (let j = clickedCol - 1; j <= clickedCol + 1; j++) {
+                if (i >= MATRIX_SIZE || i < 0 || j >= MATRIX_SIZE || j < 0) {
+                  continue;
+                }
+                if (i === clickedRow && j === clickedCol) {
+                  continue;
+                }
+
+                if (newMatrix[i][j].type !== CellType.ship) {
+                  newMatrix[i][j].type = CellType.near;
+                }
+              }
+            }
+          }
         }
+      } else {
+        if (cell.id !== "") {
+          switch (action.cell.type) {
+            case CellType.empty:
+              cell.type = CellType.ship;
+              break;
+          }
+        }
+  
+        //newMatrix[clickedRow][clickedCol] = cell;
       }
 
-      newMatrix[clickedRow][clickedCol] = cell;
+      // newMatrix[clickedRow][clickedCol] = cell;
 
       return { ...state, matrix: [...newMatrix] };
 
@@ -145,12 +112,19 @@ const seaBattleReducer = (state = defaultStore, action: any) => {
         newMatrix,
         action.shot.cellId
       );
-      if (shotCell.type === CellType.empty) {
+      
+      switch (shotCell.type) {
+        case CellType.empty : shotCell.type = CellType.miss; break;
+        case CellType.ship : shotCell.type = CellType.shot; break;
+        case CellType.near : shotCell.type = CellType.miss; break;
+        default : {}
+      }
+      /*if (shotCell.type === CellType.empty) {
         shotCell.type = CellType.miss;
       }
       if (shotCell.type === CellType.ship) {
         shotCell.type = CellType.shot;
-      }
+      }*/
 
       newMatrix[shootingRow][shootingCol] = shotCell;
 
@@ -167,11 +141,12 @@ export const initMatrixAC = (affil: number) => {
   };
 };
 
-export const setCellClickAC = (cell: ICell, affil: number) => {
+export const setCellClickAC = (cell: ICell, affil: number, down : boolean) => {
   return {
     type: SET_CELL_CLICK,
     cell: cell,
     affil: affil,
+    down : down
   };
 };
 

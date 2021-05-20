@@ -9,11 +9,15 @@ import { Spin } from 'antd';
 type ISeaBattleWindowProps = {
     affil: number
 }
+
 export const SeaBattleWindow: React.FC<ISeaBattleWindowProps> = ({ affil }) => {
     const dispatch = useDispatch();
     const [down, setDown] = useState(false);
     const [state, setstate] = useState("");
     const shotCells = useRef<Array<string>>([]);
+    
+    const [countInShip, setCountInShip] = useState(0);
+    const shipsArray = useRef<Array<number>>([]);
 
 
     let matrix = useSelector(getMatrix(affil));
@@ -24,6 +28,22 @@ export const SeaBattleWindow: React.FC<ISeaBattleWindowProps> = ({ affil }) => {
         dispatch(resetMatrixAC(affil));
         dispatch(initMatrixAC(affil));
     }
+
+    const checkMarine = () => {
+        const standardValues = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
+        
+        if (shipsArray.current.sort().join() == standardValues.join()) {
+            console.log('ALL OK')
+            shipsArray.current = [];
+        } else {
+            console.log('FAIL')
+        }
+    }
+
+    const startGame = () => {
+        checkMarine();
+    }
+
 
     if (!matrixIsInit) {
         return <Spin size="large" />
@@ -41,11 +61,16 @@ export const SeaBattleWindow: React.FC<ISeaBattleWindowProps> = ({ affil }) => {
                             down={down}
                             affil={affil}
                             setstate={setstate}
-                            shotCells={shotCells} />
+                            shotCells={shotCells}
+                            countInShip={countInShip}
+                            setCountInShip={setCountInShip}
+                            shipsArray={shipsArray}
+                            />
                     })
                 })}
             </div>
             <button onClick={clickReset}>Очистить</button>
+            <button onClick={startGame}>Готово!</button>
         </div>
     )
 }
