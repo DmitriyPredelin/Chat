@@ -3,6 +3,7 @@ body {
     margin: 0;
     background-color: #05776c!important;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 /*overflow: hidden;*/

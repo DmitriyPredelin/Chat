@@ -22,8 +22,6 @@ export const SeeBattleCell = ({ setDown, down, affil, cell, setstate, shotCells,
     const dispatch = useDispatch();
     const socket = useWebSocket();
 
-
-
     let style: string = classNames(
         "sea-battle__cell",
         { "dash": cell.type === CellType.near },
